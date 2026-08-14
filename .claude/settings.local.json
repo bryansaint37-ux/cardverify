@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(tasklist)",
+      "Bash(cd \"c:/Users/PC/Desktop/site de veri\" && tasklist 2>/dev/null | grep -i \"node.exe\"; echo \"--- staging ---\"; ls node_modules/.package-lock.json 2>/dev/null; ls -d node_modules/.staging 2>/dev/null && echo \"staging exists\"; stat -c '%y' node_modules 2>/dev/null)",
+      "Read(//c/Users/PC/Desktop/site de veri/**)",
+      "Bash(npx tsc *)",
+      "Bash(node node_modules/typescript/bin/tsc --noEmit)",
+      "Bash(npm run *)",
+      "Bash(npx next *)",
+      "Bash(node --experimental-strip-types tmp-check.mts)",
+      "Bash(grep -v \"ExperimentalWarning\\\\|Use \\\\`node --trace\")",
+      "Bash(node -e ' *)",
+      "Bash(taskkill //PID 2528 //F)",
+      "Bash(taskkill //PID 19276 //F)",
+      "Bash(netstat -ano)",
+      "Bash(timeout 60 npx prisma migrate dev --name drop_demo_submission)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(npx prisma *)"
+    ]
+  }
+}

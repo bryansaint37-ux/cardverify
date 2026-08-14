@@ -1,0 +1,297 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------
+   Thème statique — polices, rayon. Les couleurs vivent plus bas,
+   dans les jetons clair/sombre (@theme inline).
+--------------------------------------------------------------- */
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+  --radius-4xl: 2rem;
+}
+
+/* ---------------------------------------------------------------
+   Jetons de thème — clair/sombre.
+   `:root` porte les valeurs sombres par défaut (identité de marque du
+   site) ; `[data-theme="light"]` les redéfinit. `@theme inline` les
+   expose comme classes Tailwind (bg-card, text-ink-2, border-line…)
+   qui restent réactives au changement de thème sans jamais utiliser
+   le préfixe `dark:` — un seul jeu de classes suffit partout.
+--------------------------------------------------------------- */
+:root {
+  color-scheme: dark;
+
+  --surface-app: #020617;
+  --surface-card: rgba(15, 23, 42, 0.4);
+  --surface-card-hover: rgba(15, 23, 42, 0.75);
+  --surface-input: rgba(15, 23, 42, 0.6);
+  --surface-chip: rgba(30, 41, 59, 0.6);
+  --surface-solid: #1e293b;
+  --surface-header: rgba(2, 6, 23, 0.75);
+
+  --line: rgba(148, 163, 184, 0.16);
+  --line-soft: rgba(148, 163, 184, 0.3);
+  --line-divider: rgba(148, 163, 184, 0.1);
+
+  --ink-1: #f8fafc;
+  --ink-2: #cbd5e1;
+  --ink-3: #94a3b8;
+  --ink-4: #64748b;
+
+  --accent: #38bdf8;
+  --accent-ink: #020617;
+  --glow-accent: rgba(56, 189, 248, 0.35);
+  --glow-violet: rgba(139, 92, 246, 0.28);
+
+  --status-success-text: #6ee7b7;
+  --status-success-bg: rgba(16, 185, 129, 0.1);
+  --status-success-border: rgba(16, 185, 129, 0.3);
+  --status-success-icon-bg: rgba(16, 185, 129, 0.15);
+  --status-success-icon: #34d399;
+
+  --status-warning-text: #fcd34d;
+  --status-warning-bg: rgba(245, 158, 11, 0.1);
+  --status-warning-border: rgba(245, 158, 11, 0.3);
+  --status-warning-icon-bg: rgba(245, 158, 11, 0.15);
+  --status-warning-icon: #fbbf24;
+
+  --status-danger-text: #fda4af;
+  --status-danger-bg: rgba(244, 63, 94, 0.1);
+  --status-danger-border: rgba(244, 63, 94, 0.3);
+  --status-danger-icon-bg: rgba(244, 63, 94, 0.15);
+  --status-danger-icon: #fb7185;
+
+  --status-info-text: #7dd3fc;
+  --status-info-bg: rgba(56, 189, 248, 0.1);
+  --status-info-border: rgba(56, 189, 248, 0.3);
+  --status-info-icon-bg: rgba(56, 189, 248, 0.15);
+  --status-info-icon: #38bdf8;
+
+  --status-neutral-text: var(--ink-3);
+  --status-neutral-bg: var(--surface-chip);
+  --status-neutral-border: var(--line);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --surface-app: #f8fafc;
+  --surface-card: rgba(255, 255, 255, 0.6);
+  --surface-card-hover: rgba(255, 255, 255, 0.92);
+  --surface-input: rgba(255, 255, 255, 0.8);
+  --surface-chip: rgba(226, 232, 240, 0.8);
+  --surface-solid: #e2e8f0;
+  --surface-header: rgba(248, 250, 252, 0.75);
+
+  --line: rgba(15, 23, 42, 0.1);
+  --line-soft: rgba(15, 23, 42, 0.16);
+  --line-divider: rgba(15, 23, 42, 0.07);
+
+  --ink-1: #0b1120;
+  --ink-2: #334155;
+  --ink-3: #64748b;
+  --ink-4: #94a3b8;
+
+  --accent: #0284c7;
+  --accent-ink: #f8fafc;
+  --glow-accent: rgba(2, 132, 199, 0.2);
+  --glow-violet: rgba(124, 58, 237, 0.16);
+
+  --status-success-text: #047857;
+  --status-success-bg: rgba(5, 150, 105, 0.08);
+  --status-success-border: rgba(5, 150, 105, 0.25);
+  --status-success-icon-bg: rgba(5, 150, 105, 0.12);
+  --status-success-icon: #059669;
+
+  --status-warning-text: #b45309;
+  --status-warning-bg: rgba(217, 119, 6, 0.08);
+  --status-warning-border: rgba(217, 119, 6, 0.25);
+  --status-warning-icon-bg: rgba(217, 119, 6, 0.12);
+  --status-warning-icon: #d97706;
+
+  --status-danger-text: #be123c;
+  --status-danger-bg: rgba(225, 29, 72, 0.08);
+  --status-danger-border: rgba(225, 29, 72, 0.25);
+  --status-danger-icon-bg: rgba(225, 29, 72, 0.12);
+  --status-danger-icon: #e11d48;
+
+  --status-info-text: #0369a1;
+  --status-info-bg: rgba(2, 132, 199, 0.08);
+  --status-info-border: rgba(2, 132, 199, 0.25);
+  --status-info-icon-bg: rgba(2, 132, 199, 0.12);
+  --status-info-icon: #0284c7;
+}
+
+@theme inline {
+  --color-app: var(--surface-app);
+  --color-card: var(--surface-card);
+  --color-card-hover: var(--surface-card-hover);
+  --color-input: var(--surface-input);
+  --color-chip: var(--surface-chip);
+  --color-solid: var(--surface-solid);
+  --color-header: var(--surface-header);
+
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-divider: var(--line-divider);
+
+  --color-ink-1: var(--ink-1);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-4: var(--ink-4);
+
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-glow-accent: var(--glow-accent);
+  --color-glow-violet: var(--glow-violet);
+
+  --color-success: var(--status-success-text);
+  --color-success-bg: var(--status-success-bg);
+  --color-success-border: var(--status-success-border);
+  --color-success-icon-bg: var(--status-success-icon-bg);
+  --color-success-icon: var(--status-success-icon);
+
+  --color-warning: var(--status-warning-text);
+  --color-warning-bg: var(--status-warning-bg);
+  --color-warning-border: var(--status-warning-border);
+  --color-warning-icon-bg: var(--status-warning-icon-bg);
+  --color-warning-icon: var(--status-warning-icon);
+
+  --color-danger: var(--status-danger-text);
+  --color-danger-bg: var(--status-danger-bg);
+  --color-danger-border: var(--status-danger-border);
+  --color-danger-icon-bg: var(--status-danger-icon-bg);
+  --color-danger-icon: var(--status-danger-icon);
+
+  --color-info: var(--status-info-text);
+  --color-info-bg: var(--status-info-bg);
+  --color-info-border: var(--status-info-border);
+  --color-info-icon-bg: var(--status-info-icon-bg);
+  --color-info-icon: var(--status-info-icon);
+
+  --color-neutral: var(--status-neutral-text);
+  --color-neutral-bg: var(--status-neutral-bg);
+  --color-neutral-border: var(--status-neutral-border);
+}
+
+/* ---------------------------------------------------------------
+   Bases
+--------------------------------------------------------------- */
+@layer base {
+  *,
+  ::after,
+  ::before {
+    border-color: var(--line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--surface-app);
+    color: var(--ink-2);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    transition: background-color 300ms ease, color 300ms ease;
+  }
+
+  :target {
+    scroll-margin-top: 6rem;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--accent) 30%, transparent);
+    color: var(--ink-1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------
+   Utilitaires maison
+--------------------------------------------------------------- */
+
+/* Lien d'évitement : hors écran, révélé au focus clavier uniquement. */
+@utility skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+
+  &:focus {
+    left: 1rem;
+    top: 1rem;
+  }
+}
+
+/* Verre dépoli — surface translucide + flou, jetons réactifs au thème. */
+@utility glass {
+  background-color: var(--surface-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--line);
+}
+
+@utility glass-strong {
+  background-color: var(--surface-card-hover);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--line-soft);
+}
+
+/* Lueur — ombre portée colorée, pour les états de survol premium. */
+@utility glow-accent {
+  box-shadow: 0 8px 40px -12px var(--glow-accent);
+}
+
+@utility glow-violet {
+  box-shadow: 0 8px 40px -12px var(--glow-violet);
+}
+
+/* ---------------------------------------------------------------
+   Animations décoratives — halos de dégradé et flottement léger.
+--------------------------------------------------------------- */
+@keyframes blob-move {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(24px, -32px) scale(1.06);
+  }
+  66% {
+    transform: translate(-18px, 18px) scale(0.94);
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-blob {
+  animation: blob-move 12s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float-y 5s ease-in-out infinite;
+}

@@ -1,0 +1,39 @@
+{
+  "name": "card-verify",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Card Verify — démonstration pédagogique de l'algorithme de Luhn (Next.js 15, TypeScript, Tailwind CSS).",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:reset": "prisma migrate reset"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "framer-motion": "^13.0.0",
+    "lucide-react": "^1.30.0",
+    "next": "15.5.4",
+    "prisma": "^6.19.3",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.1.13",
+    "@types/node": "22.15.3",
+    "@types/react": "19.1.10",
+    "@types/react-dom": "19.1.7",
+    "eslint": "9.34.0",
+    "eslint-config-next": "15.5.4",
+    "tailwindcss": "4.1.13",
+    "typescript": "5.9.2"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}

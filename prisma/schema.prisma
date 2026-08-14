@@ -1,0 +1,31 @@
+// Base SQLite locale — enregistre les vérifications réellement soumises
+// depuis /verifier (route /api/verify), visibles sur /dashboard.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model VerifiedSubmission {
+  id           String   @id @default(cuid())
+  /// Identifiant du type de carte (liste prédéfinie — voir src/content/vouchers.ts)
+  type         String
+  amount       Int
+  reference    String
+  rechargeCode String?
+  currency     String?
+  email        String?
+  /// Faux si le code saisi ne respecte pas le format attendu pour ce type de carte.
+  /// Enregistré quand même : chaque tentative de vérification doit rester visible.
+  formatValid  Boolean  @default(true)
+  /// Verdict simulé ("plausible" / "suspect"), absent quand le format est invalide.
+  verdict      String?
+  createdAt    DateTime @default(now())
+
+  @@index([type])
+  @@index([createdAt])
+}
