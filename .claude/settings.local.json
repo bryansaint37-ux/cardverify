@@ -17,7 +17,9 @@
       "Bash(netstat -ano)",
       "Bash(timeout 60 npx prisma migrate dev --name drop_demo_submission)",
       "Bash(echo \"EXIT:$?\")",
-      "Bash(npx prisma *)"
+      "Bash(npx prisma *)",
+      "Bash(git credential *)",
+      "Bash(echo \"exit:$?\")"
     ]
   }
 }
