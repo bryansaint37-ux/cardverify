@@ -37,3 +37,5 @@ yarn-error.log*
 
 # ignore any env variants
 .env.*
+.vercel
+.env*

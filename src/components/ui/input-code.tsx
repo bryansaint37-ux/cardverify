@@ -25,6 +25,12 @@ const stateStyles: Record<InputCodeState, string> = {
   error: "border-danger-border focus:border-danger focus:ring-danger",
 };
 
+const hintStyles: Record<InputCodeState, string> = {
+  default: "text-ink-4",
+  success: "text-success",
+  error: "text-danger",
+};
+
 const sizeStyles: Record<InputCodeSize, string> = {
   md: "px-4 py-3 text-base",
   lg: "px-4 py-3.5 text-lg tracking-wider",
@@ -75,7 +81,7 @@ export function InputCode({
       </div>
 
       {hint ? (
-        <p id={hintId} className="mt-2 text-xs text-ink-4">
+        <p id={hintId} className={cn("mt-2 text-xs", hintStyles[state])}>
           {hint}
         </p>
       ) : null}

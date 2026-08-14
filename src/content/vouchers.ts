@@ -1,12 +1,3 @@
-export type VoucherFormat = {
-  minLength: number;
-  maxLength: number;
-  /** Motif de caractères accepté — gabarit simplifié, à but pédagogique. */
-  pattern: RegExp;
-  /** Description humaine du motif, pour les messages d'erreur. */
-  hint: string;
-};
-
 export type VoucherBrand = {
   id: string;
   name: string;
@@ -19,12 +10,6 @@ export type VoucherBrand = {
   glow: string;
   /** Chemin vers le logo réel de la marque (public/logos), si disponible. */
   logo?: string;
-  /**
-   * Gabarit de format utilisé par la démonstration. Simplifié et fictif :
-   * il ne provient d'aucune spécification officielle et ne sert qu'à
-   * illustrer un contrôle de saisie côté client.
-   */
-  format: VoucherFormat;
 };
 
 const transcash: VoucherBrand = {
@@ -36,12 +21,6 @@ const transcash: VoucherBrand = {
   gradient: "from-orange-400 to-rose-500",
   glow: "hover:shadow-orange-500/10",
   logo: "/logos/transcash.jpg",
-  format: {
-    minLength: 16,
-    maxLength: 16,
-    pattern: /^\d{16}$/,
-    hint: "16 chiffres",
-  },
 };
 
 const pcs: VoucherBrand = {
@@ -52,12 +31,6 @@ const pcs: VoucherBrand = {
   gradient: "from-indigo-400 to-blue-600",
   glow: "hover:shadow-indigo-500/10",
   logo: "/logos/pcs.jpg",
-  format: {
-    minLength: 16,
-    maxLength: 16,
-    pattern: /^\d{16}$/,
-    hint: "16 chiffres",
-  },
 };
 
 const paysafecard: VoucherBrand = {
@@ -68,12 +41,6 @@ const paysafecard: VoucherBrand = {
   gradient: "from-sky-400 to-blue-600",
   glow: "hover:shadow-sky-500/10",
   logo: "/logos/paysafecard.jpg",
-  format: {
-    minLength: 16,
-    maxLength: 16,
-    pattern: /^\d{16}$/,
-    hint: "16 chiffres",
-  },
 };
 
 const neosurf: VoucherBrand = {
@@ -84,12 +51,6 @@ const neosurf: VoucherBrand = {
   gradient: "from-cyan-400 to-teal-500",
   glow: "hover:shadow-cyan-500/10",
   logo: "/logos/neosurf.jpg",
-  format: {
-    minLength: 10,
-    maxLength: 10,
-    pattern: /^[A-Z0-9]{10}$/i,
-    hint: "10 caractères alphanumériques",
-  },
 };
 
 const steam: VoucherBrand = {
@@ -100,12 +61,6 @@ const steam: VoucherBrand = {
   gradient: "from-slate-400 to-slate-700",
   glow: "hover:shadow-slate-400/10",
   logo: "/logos/steam.jpg",
-  format: {
-    minLength: 15,
-    maxLength: 29,
-    pattern: /^[A-Z0-9-]{15,29}$/i,
-    hint: "des lettres, des chiffres et éventuellement des tirets",
-  },
 };
 
 const apple: VoucherBrand = {
@@ -115,12 +70,6 @@ const apple: VoucherBrand = {
   description: "Carte cadeau destinée à créditer un identifiant Apple.",
   gradient: "from-fuchsia-400 to-purple-600",
   glow: "hover:shadow-fuchsia-500/10",
-  format: {
-    minLength: 16,
-    maxLength: 16,
-    pattern: /^[A-Z0-9]{16}$/i,
-    hint: "16 caractères alphanumériques",
-  },
 };
 
 export const voucherBrands: VoucherBrand[] = [

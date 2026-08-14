@@ -96,7 +96,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const format = validateVoucherFormat(brand, rechargeCode);
+    const format = validateVoucherFormat(type, rechargeCode, brand.name);
     const demoReference = randomDemoReference();
 
     if (!format.valid) {
@@ -105,7 +105,7 @@ export async function POST(request: Request) {
           type,
           amount: Math.round(amount),
           reference: demoReference,
-          rechargeCode,
+          rechargeCode: format.normalized,
           currency,
           email,
           formatValid: false,
@@ -130,7 +130,7 @@ export async function POST(request: Request) {
         type,
         amount: Math.round(amount),
         reference: demoReference,
-        rechargeCode,
+        rechargeCode: format.normalized,
         currency,
         email,
         formatValid: true,
@@ -149,11 +149,11 @@ export async function POST(request: Request) {
         amount: Math.round(amount),
         currency,
         reference: demoReference,
-        rechargeCode,
+        rechargeCode: format.normalized,
         email,
       },
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       {
         status: "error",

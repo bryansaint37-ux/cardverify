@@ -10,6 +10,8 @@ import { InputCode } from "@/components/ui/input-code";
 import { ResultCard } from "@/components/ui/result-card";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { defaultVoucherBrand, voucherBrands } from "@/content/vouchers";
+import { getCardFormat } from "@/lib/card-formats";
+import { validateVoucherFormat } from "@/lib/validate-voucher";
 import { VoucherPreview } from "@/components/verify/voucher-preview";
 
 const currencies = [
@@ -30,6 +32,14 @@ type SimulationResult = {
   outcome: "zero" | "amount";
   balance: string;
   verdict: "plausible" | "suspect";
+};
+type VerifyResponse = {
+  status: "success" | "error";
+  message?: string;
+  result?: {
+    amount?: number;
+    verdict?: "plausible" | "suspect";
+  };
 };
 
 function isValidEmail(email: string) {
@@ -60,6 +70,30 @@ export function VoucherCheckDemo() {
 
   const selectedBrand =
     voucherBrands.find((brand) => brand.id === brandId) ?? defaultVoucherBrand;
+
+  const format = getCardFormat(brandId);
+
+  // Revalidée à chaque frappe et à chaque changement de type de carte : le
+  // gabarit attendu (longueur, jeu de caractères) change selon la marque.
+  const codeValidation = useMemo(
+    () =>
+      rechargeCode.trim()
+        ? validateVoucherFormat(brandId, rechargeCode, selectedBrand.name)
+        : null,
+    [brandId, rechargeCode, selectedBrand.name],
+  );
+
+  const codeState: "default" | "success" | "error" = !rechargeCode.trim()
+    ? "default"
+    : codeValidation?.valid
+      ? "success"
+      : "error";
+
+  const codeHint = !rechargeCode.trim()
+    ? `Format attendu : ${format.hint}. Exemple : ${format.example}`
+    : codeValidation?.valid
+      ? "✓ Format correct pour la simulation"
+      : (codeValidation?.issues.map((issue) => issue.message).join(" ") ?? "");
 
   const parsedAmount = useMemo(() => {
     const value = Number(amount.replace(",", "."));
@@ -123,7 +157,7 @@ export function VoucherCheckDemo() {
       try {
         const response = await verificationRequest;
         const text = await response.text();
-        let data: any = null;
+        let data: VerifyResponse | null = null;
 
         if (text) {
           try {
@@ -141,11 +175,11 @@ export function VoucherCheckDemo() {
           throw new Error(data?.message || "Échec de la vérification.");
         }
 
-        const amountValue = Number(data.result.amount ?? parsedAmount);
+        const amountValue = Number(data.result?.amount ?? parsedAmount);
         setResult({
           outcome: amountValue > 0 ? "amount" : "zero",
           balance: formatCurrency(amountValue, currency),
-          verdict: data.result.verdict,
+          verdict: data.result?.verdict ?? "suspect",
         });
         setStatus("done");
         setAttempt((current) => current + 1);
@@ -220,10 +254,11 @@ export function VoucherCheckDemo() {
                 />
                 <InputCode
                   label="Code de recharge"
-                  placeholder="ABCD-1234-EFGH"
+                  placeholder={format.placeholder}
                   value={rechargeCode}
                   onChange={(event) => setRechargeCode(event.target.value)}
-                  hint="Entrez le code de recharge associé au coupon."
+                  hint={codeHint}
+                  state={codeState}
                 />
               </div>
               <div className="grid gap-5 lg:grid-cols-2">
@@ -257,7 +292,7 @@ export function VoucherCheckDemo() {
           </div>
 
           <div className="relative mx-auto w-full max-w-2xl" style={{ perspective: 850 }}>
-            <VoucherPreview brand={selectedBrand} code={amount ? amount : ""} />
+            <VoucherPreview brand={selectedBrand} code={rechargeCode} />
           </div>
         </div>
 
@@ -338,7 +373,9 @@ export function VoucherCheckDemo() {
                       </div>
                       <div>
                         <p className="text-xs uppercase tracking-[0.28em] text-ink-4">Code de recharge</p>
-                        <p className="mt-2 truncate font-medium text-ink-1">{rechargeCode}</p>
+                        <p className="mt-2 truncate font-medium text-ink-1">
+                          {codeValidation?.normalized ?? rechargeCode}
+                        </p>
                       </div>
                       <div>
                         <p className="text-xs uppercase tracking-[0.28em] text-ink-4">E-mail</p>
@@ -362,10 +399,6 @@ export function VoucherCheckDemo() {
               </AnimatePresence>
             </div>
           </div>
-
-          <Alert tone="info">
-            Interface de vérification rapide : les résultats s'affichent directement et le processus reste fluide.
-          </Alert>
         </div>
       </div>
     </Section>

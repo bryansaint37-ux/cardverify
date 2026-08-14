@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import type { VoucherBrand } from "@/content/vouchers";
+import { getCardFormat } from "@/lib/card-formats";
 import { cn } from "@/lib/utils";
 
 const BrandLogo = ({ brand }: { brand: VoucherBrand }) => {
@@ -135,11 +136,12 @@ const BrandLogo = ({ brand }: { brand: VoucherBrand }) => {
  * demande jamais ces informations.
  */
 export function VoucherPreview({ brand, code }: { brand: VoucherBrand; code: string }) {
+  const format = getCardFormat(brand.id);
   const masked = code
     ? code
-        .padEnd(brand.format.minLength, "•")
-        .slice(0, Math.max(brand.format.minLength, code.length))
-    : "•".repeat(brand.format.minLength);
+        .padEnd(format.minLength, "•")
+        .slice(0, Math.max(format.minLength, code.length))
+    : "•".repeat(format.minLength);
 
   return (
     <div className="relative mx-auto w-full max-w-sm" style={{ perspective: 800 }}>

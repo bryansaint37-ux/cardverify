@@ -1,13 +1,15 @@
-// Base SQLite locale — enregistre les vérifications réellement soumises
-// depuis /verifier (route /api/verify), visibles sur /dashboard.
+// Base Postgres (Neon, via l'intégration Vercel) — enregistre les
+// vérifications réellement soumises depuis /verifier (route /api/verify),
+// visibles sur /dashboard.
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 model VerifiedSubmission {

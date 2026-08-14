@@ -19,7 +19,13 @@
       "Bash(echo \"EXIT:$?\")",
       "Bash(npx prisma *)",
       "Bash(git credential *)",
-      "Bash(echo \"exit:$?\")"
+      "Bash(echo \"exit:$?\")",
+      "Bash(npx vercel *)",
+      "Bash(rm -rf prisma/migrations)",
+      "Bash(mkdir -p prisma/migrations/20260814000000_init_postgres)",
+      "Bash(taskkill //PID 3452 //F)",
+      "Bash(timeout 20 npx vercel env ls)",
+      "Bash(npm view *)"
     ]
   }
 }

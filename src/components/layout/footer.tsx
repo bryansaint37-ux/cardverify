@@ -13,11 +13,6 @@ export function Footer() {
         <div className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2">
             <Logo />
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-ink-3">
-              {siteConfig.tagline}. Un outil pédagogique open source pour
-              comprendre l&apos;algorithme de Luhn — sans jamais envoyer la
-              moindre donnée sur un serveur.
-            </p>
           </div>
 
           {footerNav.map((group) => (
@@ -41,7 +36,7 @@ export function Footer() {
 
         <div className="flex flex-col gap-4 border-t border-line py-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-ink-4">
-            © {year} {siteConfig.name}. Projet de démonstration.
+            © {year} {siteConfig.name}.
           </p>
           <p className="text-xs text-ink-4">
             Aucun numéro saisi n&apos;est transmis, journalisé ou stocké.
