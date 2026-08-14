@@ -92,7 +92,7 @@ export function VoucherCheckDemo() {
   const codeHint = !rechargeCode.trim()
     ? `Format attendu : ${format.hint}. Exemple : ${format.example}`
     : codeValidation?.valid
-      ? "✓ Format correct pour la simulation"
+      ? "✓ Format correct"
       : (codeValidation?.issues.map((issue) => issue.message).join(" ") ?? "");
 
   const parsedAmount = useMemo(() => {
