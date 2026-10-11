@@ -265,9 +265,6 @@ export default async function AlgorithmePage() {
             {t("ctaTry")}
             <Icon name="arrow-right" size={18} />
           </ButtonLink>
-          <ButtonLink href="/faq" variant="outline">
-            {t("ctaFaq")}
-          </ButtonLink>
         </div>
       </Container>
     </>

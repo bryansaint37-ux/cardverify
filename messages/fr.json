@@ -39,12 +39,22 @@
     "closeMenu": "Fermer le menu",
     "testDemo": "Tester la démo",
     "items": {
-      "verify": { "label": "Vérifier", "description": "Simulation interactive de coupon" },
-      "dashboard": { "label": "Tableau de bord", "description": "Statistiques sur données réelles de vérification" },
-      "demo": { "label": "Démonstration", "description": "Testez l'algorithme en direct" },
-      "algorithm": { "label": "Algorithme", "description": "Le calcul de Luhn, étape par étape" },
-      "faq": { "label": "FAQ", "description": "" },
-      "about": { "label": "À propos", "description": "" }
+      "verify": {
+        "label": "Vérifier",
+        "description": "Simulation interactive de coupon"
+      },
+      "dashboard": {
+        "label": "Tableau de bord",
+        "description": "Statistiques sur données réelles de vérification"
+      },
+      "demo": {
+        "label": "Démonstration",
+        "description": "Testez l'algorithme en direct"
+      },
+      "algorithm": {
+        "label": "Algorithme",
+        "description": "Le calcul de Luhn, étape par étape"
+      }
     }
   },
   "footer": {
@@ -54,14 +64,12 @@
         "items": {
           "verify": "Vérifier un coupon",
           "demo": "Démonstration",
-          "algorithm": "Algorithme de Luhn",
-          "faq": "Questions fréquentes"
+          "algorithm": "Algorithme de Luhn"
         }
       },
       "resources": {
         "title": "Ressources",
         "items": {
-          "about": "À propos du projet",
           "contact": "Contact",
           "sitemap": "Plan du site"
         }
@@ -78,7 +86,9 @@
     "noDataNotice": "Aucun numéro saisi n'est transmis, journalisé ou stocké."
   },
   "home": {
-    "meta": { "title": "Vérifier un coupon" }
+    "meta": {
+      "title": "Vérifier un coupon"
+    }
   },
   "hero": {
     "badge": "Projet étudiant — maquette pédagogique, non fonctionnelle",
@@ -130,12 +140,30 @@
     "apple": "Carte cadeau destinée à créditer un identifiant Apple."
   },
   "cardFormats": {
-    "transcash": { "hint": "12 chiffres", "example": "123456789123" },
-    "pcs": { "hint": "10 caractères alphanumériques", "example": "A7218JH12X" },
-    "paysafecard": { "hint": "16 chiffres (tirets optionnels)", "example": "1234-1234-1234-1234" },
-    "neosurf": { "hint": "10 caractères alphanumériques", "example": "ABC1234567" },
-    "steam": { "hint": "des lettres, des chiffres et éventuellement des tirets", "example": "STEAM-5F27K-9QX3P" },
-    "apple": { "hint": "16 caractères alphanumériques", "example": "X7K9P2M4Q8R1T5W3" }
+    "transcash": {
+      "hint": "12 chiffres",
+      "example": "123456789123"
+    },
+    "pcs": {
+      "hint": "10 caractères alphanumériques",
+      "example": "A7218JH12X"
+    },
+    "paysafecard": {
+      "hint": "16 chiffres (tirets optionnels)",
+      "example": "1234-1234-1234-1234"
+    },
+    "neosurf": {
+      "hint": "10 caractères alphanumériques",
+      "example": "ABC1234567"
+    },
+    "steam": {
+      "hint": "des lettres, des chiffres et éventuellement des tirets",
+      "example": "STEAM-5F27K-9QX3P"
+    },
+    "apple": {
+      "hint": "16 caractères alphanumériques",
+      "example": "X7K9P2M4Q8R1T5W3"
+    }
   },
   "voucherValidation": {
     "empty": "Saisissez un code à tester.",
@@ -392,37 +420,7 @@
       "alertBody": "Un numéro validé par Luhn n'est pas un numéro valide. Il est simplement bien formé. L'algorithme ignore l'existence du compte, son solde, sa date d'expiration et son statut. Générer des suites de chiffres qui passent le test est trivial — c'est précisément pourquoi les réseaux de paiement s'appuient sur une autorisation bancaire en ligne, jamais sur une somme de contrôle.",
       "conclusion": "L'usage légitime de Luhn côté client se résume donc à un point : éviter un aller-retour réseau inutile quand la saisie comporte manifestement une faute de frappe."
     },
-    "ctaTry": "Essayer sur la démonstration",
-    "ctaFaq": "Questions fréquentes"
-  },
-  "aboutPage": {
-    "meta": {
-      "title": "À propos du projet",
-      "description": "Card Verify est un projet pédagogique open source construit avec Next.js 15, TypeScript et Tailwind CSS pour illustrer l'algorithme de Luhn et les bonnes pratiques d'un formulaire de paiement."
-    },
-    "eyebrow": "Le projet",
-    "title": "Un site pour apprendre, pas pour vérifier",
-    "description": "Card Verify existe pour rendre visible un calcul que la plupart des formulaires de paiement exécutent en silence.",
-    "why": {
-      "title": "Pourquoi ce projet",
-      "p1": "Quand un formulaire affiche « numéro de carte invalide » avant même d'avoir contacté la banque, il applique l'algorithme de Luhn. Ce contrôle est partout, et pourtant rarement expliqué : on en retient souvent qu'il « vérifie la carte », ce qui est faux et prête à confusion.",
-      "p2": "Ce site sépare donc clairement les trois niveaux : la cohérence mathématique du numéro, l'identification du réseau émetteur, et l'autorisation bancaire — qui, elle, n'a rien à faire dans un navigateur."
-    },
-    "stack": {
-      "title": "Choix techniques",
-      "items": {
-        "nextjs": { "name": "Next.js 15", "detail": "App Router, composants serveur par défaut, métadonnées et sitemap générés par le framework." },
-        "typescript": { "name": "TypeScript", "detail": "Mode strict, types explicites sur toute la logique métier, aucune assertion `any`." },
-        "tailwind": { "name": "Tailwind CSS v4", "detail": "Thème déclaré en CSS, aucune feuille de style hors du système d'utilitaires." },
-        "zeroDep": { "name": "Zéro dépendance métier", "detail": "L'algorithme, le formatage et la détection de réseau tiennent dans trois fichiers autonomes." }
-      }
-    },
-    "scope": {
-      "title": "Périmètre assumé",
-      "alertBody": "Card Verify n'est pas un service de vérification bancaire et ne le deviendra pas. Il n'interroge aucun réseau de paiement, n'expose aucune base de BIN et ne conserve aucune saisie. Toute utilisation visant à tester des numéros réels sort du cadre du projet.",
-      "p1": "En production, un formulaire de paiement doit confier la saisie à un prestataire certifié {pciDss}, via un champ hébergé ou un jeton. Votre application ne devrait jamais voir un numéro de carte en clair, et encore moins le journaliser.",
-      "p2": "Le contrôle de Luhn côté client garde malgré tout son intérêt : afficher instantanément une faute de frappe, sans réseau et sans attente."
-    }
+    "ctaTry": "Essayer sur la démonstration"
   },
   "contactPage": {
     "meta": {
@@ -448,53 +446,6 @@
     "messagePlaceholder": "Votre message…",
     "messageHint": "N'incluez jamais de numéro de carte réel dans un message.",
     "submit": "Envoyer (désactivé en démonstration)"
-  },
-  "faqPage": {
-    "meta": {
-      "title": "Questions fréquentes",
-      "description": "Ce que Card Verify vérifie réellement, où vont vos saisies, pourquoi un numéro validé par Luhn peut être refusé par une banque, et comment réutiliser le code."
-    },
-    "eyebrow": "Aide",
-    "title": "Questions fréquentes",
-    "description": "Les réponses aux confusions les plus courantes autour de la validation d'un numéro de carte.",
-    "entries": {
-      "real": {
-        "question": "Card Verify vérifie-t-il qu'une carte est réelle ou approvisionnée ?",
-        "answer": "Non, et c'est une distinction essentielle. L'algorithme de Luhn ne teste que la cohérence mathématique d'une suite de chiffres. Il ignore totalement l'existence du compte, son solde, sa date d'expiration ou son statut. Seul un organisme bancaire, via son réseau d'autorisation, peut répondre à ces questions."
-      },
-      "dataSent": {
-        "question": "Mes saisies sont-elles envoyées quelque part ?",
-        "answer": "Non. Toute la vérification s'exécute en JavaScript dans votre navigateur. Aucun numéro n'est transmis à un serveur, enregistré dans un journal ou stocké localement. Vous pouvez le constater en ouvrant l'onglet « Réseau » des outils de développement : aucune requête n'est émise pendant la saisie."
-      },
-      "realNumber": {
-        "question": "Dois-je saisir un vrai numéro de carte ?",
-        "answer": "Surtout pas. Ce site est une démonstration pédagogique : utilisez les numéros de test publics fournis sur la page de démonstration. Ils sont publiés par les réseaux eux-mêmes pour les environnements de développement et ne correspondent à aucun compte."
-      },
-      "purpose": {
-        "question": "À quoi sert concrètement l'algorithme de Luhn ?",
-        "answer": "À détecter les erreurs de saisie avant tout appel réseau. Il repère la totalité des fautes sur un chiffre unique et la plupart des inversions de deux chiffres adjacents. Un formulaire qui l'implémente évite une requête inutile et affiche l'erreur immédiatement. On le retrouve aussi sur les numéros IMEI, les identifiants nationaux et certains codes-barres."
-      },
-      "networkDetection": {
-        "question": "Pourquoi le réseau est-il détecté avant même la fin de la saisie ?",
-        "answer": "Parce que les premiers chiffres, appelés IIN ou BIN (Issuer Identification Number), désignent l'émetteur. Un 4 initial signale Visa, la plage 51-55 et 2221-2720 Mastercard, 34 et 37 American Express. Cette table de préfixes est publique et normalisée par l'ISO/IEC 7812."
-      },
-      "refused": {
-        "question": "Un numéro validé par Luhn peut-il être refusé par la banque ?",
-        "answer": "Constamment. Luhn est un filtre de premier niveau : il élimine les saisies incohérentes. Un numéro peut passer ce test tout en désignant une carte expirée, bloquée, plafonnée ou tout simplement jamais émise. L'inverse n'est pas vrai : un numéro qui échoue au test de Luhn est certainement erroné."
-      },
-      "reuse": {
-        "question": "Puis-je réutiliser ce code dans mon projet ?",
-        "answer": "Oui. Les fonctions de src/lib/luhn.ts et src/lib/validate-card.ts sont autonomes, sans dépendance externe, et typées. Rappelez-vous cependant qu'un formulaire de paiement en production doit passer par un prestataire certifié PCI DSS : votre application ne devrait jamais manipuler un numéro de carte en clair."
-      },
-      "noJs": {
-        "question": "Le site fonctionne-t-il sans JavaScript ?",
-        "answer": "Le contenu pédagogique — pages, explications, FAQ — est rendu côté serveur et reste entièrement lisible. Seul le formulaire interactif de la page de démonstration nécessite JavaScript, puisque le calcul se fait délibérément côté client."
-      }
-    },
-    "ctaTitle": "Une question sans réponse ?",
-    "ctaDescription": "Le projet est pédagogique et ouvert aux suggestions. Écrivez-nous, ou lisez d'abord l'explication complète de l'algorithme.",
-    "ctaContact": "Nous écrire",
-    "ctaDocs": "Lire la documentation"
   },
   "legalPage": {
     "meta": {
@@ -559,7 +510,9 @@
     }
   },
   "notFoundPage": {
-    "meta": { "title": "Page introuvable" },
+    "meta": {
+      "title": "Page introuvable"
+    },
     "title": "Cette page n'existe pas",
     "description": "Le lien est peut-être obsolète, ou l'adresse comporte une faute de frappe — l'algorithme de Luhn n'aide malheureusement pas pour les URL.",
     "ctaHome": "Retour à l'accueil",

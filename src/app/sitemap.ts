@@ -12,8 +12,6 @@ const routes: Route[] = [
   { path: "/verifier", changeFrequency: "monthly", priority: 0.9 },
   { path: "/verification", changeFrequency: "monthly", priority: 0.9 },
   { path: "/algorithme", changeFrequency: "monthly", priority: 0.8 },
-  { path: "/faq", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/a-propos", changeFrequency: "yearly", priority: 0.5 },
   { path: "/contact", changeFrequency: "yearly", priority: 0.4 },
   { path: "/mentions-legales", changeFrequency: "yearly", priority: 0.2 },
   { path: "/confidentialite", changeFrequency: "yearly", priority: 0.2 },

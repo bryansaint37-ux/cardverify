@@ -1,4 +1,4 @@
-export type NavKey = "verify" | "dashboard" | "demo" | "algorithm" | "faq" | "about";
+export type NavKey = "verify" | "dashboard" | "demo" | "algorithm";
 
 export type NavItem = {
   key: NavKey;
@@ -10,16 +10,12 @@ export const mainNav: NavItem[] = [
   { key: "dashboard", href: "/dashboard" },
   { key: "demo", href: "/verification" },
   { key: "algorithm", href: "/algorithme" },
-  { key: "faq", href: "/faq" },
-  { key: "about", href: "/a-propos" },
 ];
 
 export type FooterNavKey =
   | "verify"
   | "demo"
   | "algorithm"
-  | "faq"
-  | "about"
   | "contact"
   | "sitemap"
   | "legalNotice"
@@ -32,13 +28,11 @@ export const footerNav: { group: "product" | "resources" | "legal"; items: { key
       { key: "verify", href: "/verifier" },
       { key: "demo", href: "/verification" },
       { key: "algorithm", href: "/algorithme" },
-      { key: "faq", href: "/faq" },
     ],
   },
   {
     group: "resources",
     items: [
-      { key: "about", href: "/a-propos" },
       { key: "contact", href: "/contact" },
       { key: "sitemap", href: "/sitemap.xml" },
     ],
