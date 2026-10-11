@@ -1,7 +1,10 @@
+import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/container";
 
 /** Squelette affiché pendant le rendu d'une route serveur. */
-export default function Loading() {
+export default async function Loading() {
+  const t = await getTranslations("loadingPage");
+
   return (
     <Container className="py-14 sm:py-20">
       <div className="animate-pulse space-y-6" aria-hidden="true">
@@ -18,7 +21,7 @@ export default function Loading() {
       </div>
 
       <span className="sr-only" role="status">
-        Chargement en cours…
+        {t("label")}
       </span>
     </Container>
   );

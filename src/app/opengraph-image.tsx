@@ -1,12 +1,15 @@
 import { ImageResponse } from "next/og";
+import { getTranslations } from "next-intl/server";
 import { siteConfig } from "@/config/site";
 
 export const alt = `${siteConfig.name} — ${siteConfig.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-/** Image de partage générée à la compilation (Open Graph / Twitter). */
-export default function OpengraphImage() {
+/** Image de partage générée par requête (Open Graph / Twitter). */
+export default async function OpengraphImage() {
+  const t = await getTranslations("site");
+
   return new ImageResponse(
     (
       <div
@@ -63,12 +66,11 @@ export default function OpengraphImage() {
             maxWidth: 900,
           }}
         >
-          Comprendre la validation d&apos;un numéro de carte
+          {t("tagline")}
         </h1>
 
         <p style={{ marginTop: 28, fontSize: 30, color: "#94a3b8", maxWidth: 860 }}>
-          Algorithme de Luhn décomposé chiffre par chiffre — démonstration
-          pédagogique, calcul entièrement local.
+          {t("description")}
         </p>
       </div>
     ),

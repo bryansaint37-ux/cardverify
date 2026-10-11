@@ -1,10 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import type { CardValidation } from "@/types";
 import { Badge } from "@/components/ui/badge";
 import { Icon } from "@/components/ui/icon";
 import { LuhnSteps } from "@/components/verify/luhn-steps";
+import { formatCardIssue } from "@/lib/validate-card";
 import { cn } from "@/lib/utils";
 
 type CheckRow = {
@@ -14,35 +16,44 @@ type CheckRow = {
 };
 
 export function ResultPanel({ validation }: { validation: CardValidation }) {
+  const t = useTranslations();
   const { digits, brand, luhn, valid, issues } = validation;
   const empty = digits.length === 0;
 
+  const brandName = t(`cardBrands.${brand.id}`);
+
   const checks: CheckRow[] = [
     {
-      label: "Format",
+      label: t("demoPage.resultPanel.checks.format"),
       passed: digits.length >= 12 && digits.length <= 19,
-      detail: `${digits.length} chiffre${digits.length > 1 ? "s" : ""} — attendu : 12 à 19`,
+      detail: t("demoPage.resultPanel.checks.formatDetail", { count: digits.length }),
     },
     {
-      label: "Réseau émetteur",
+      label: t("demoPage.resultPanel.checks.network"),
       passed: brand.id !== "unknown",
       detail:
         brand.id === "unknown"
-          ? "Préfixe IIN non reconnu"
-          : `${brand.label} — préfixe identifié`,
+          ? t("demoPage.resultPanel.checks.networkUnknown")
+          : t("demoPage.resultPanel.checks.networkDetected", { brand: brandName }),
     },
     {
-      label: "Longueur du réseau",
+      label: t("demoPage.resultPanel.checks.networkLength"),
       passed: brand.id !== "unknown" && brand.lengths.includes(digits.length),
       detail:
         brand.id === "unknown"
-          ? "Réseau inconnu, longueur non vérifiable"
-          : `${brand.label} attend ${brand.lengths.join(" ou ")} chiffres`,
+          ? t("demoPage.resultPanel.checks.networkLengthUnknown")
+          : t("demoPage.resultPanel.checks.networkLengthDetail", {
+              brand: brandName,
+              lengths: brand.lengths.join(t("cardValidation.lengthsSeparator")),
+            }),
     },
     {
-      label: "Somme de Luhn",
+      label: t("demoPage.resultPanel.checks.luhnSum"),
       passed: luhn.valid,
-      detail: `Total ${luhn.sum} — reste ${luhn.sum % 10} modulo 10`,
+      detail: t("demoPage.resultPanel.checks.luhnSumDetail", {
+        sum: luhn.sum,
+        remainder: luhn.sum % 10,
+      }),
     },
   ];
 
@@ -72,17 +83,17 @@ export function ResultPanel({ validation }: { validation: CardValidation }) {
         <div className="min-w-0">
           <p className="font-semibold text-ink-1">
             {empty
-              ? "En attente d'un numéro"
+              ? t("demoPage.resultPanel.emptyTitle")
               : valid
-                ? "Structure cohérente"
-                : "Structure incohérente"}
+                ? t("demoPage.resultPanel.validTitle")
+                : t("demoPage.resultPanel.invalidTitle")}
           </p>
           <p className="mt-0.5 text-sm text-ink-3">
             {empty
-              ? "Le résultat s'affichera à la première frappe."
+              ? t("demoPage.resultPanel.emptyDetail")
               : valid
-                ? "Le numéro respecte le format, la plage du réseau et la somme de Luhn."
-                : "Un contrôle au moins a échoué — voir le détail ci-dessous."}
+                ? t("demoPage.resultPanel.validDetail")
+                : t("demoPage.resultPanel.invalidDetail")}
           </p>
         </div>
       </motion.div>
@@ -90,9 +101,7 @@ export function ResultPanel({ validation }: { validation: CardValidation }) {
       {/* Rappel indispensable */}
       {valid && !empty ? (
         <p className="rounded-xl border border-warning-border bg-warning-bg px-4 py-3 text-xs leading-relaxed text-warning">
-          « Structure cohérente » signifie uniquement que les chiffres sont
-          mathématiquement bien formés. Cela ne dit rien de l&apos;existence de
-          la carte, de son solde ni de sa validité auprès d&apos;une banque.
+          {t("demoPage.resultPanel.disclaimer")}
         </p>
       ) : null}
 
@@ -127,7 +136,7 @@ export function ResultPanel({ validation }: { validation: CardValidation }) {
           {issues.map((issue) => (
             <li key={issue.code} className="flex items-start gap-2 text-sm text-danger">
               <Icon name="warning" size={16} className="mt-0.5 shrink-0" />
-              {issue.message}
+              {formatCardIssue(t, brand, issue)}
             </li>
           ))}
         </ul>
@@ -136,10 +145,14 @@ export function ResultPanel({ validation }: { validation: CardValidation }) {
       {/* Décomposition du calcul */}
       <div className="glass rounded-2xl p-5">
         <div className="mb-4 flex items-center justify-between gap-3">
-          <h3 className="text-sm font-semibold text-ink-2">Décomposition du calcul</h3>
+          <h3 className="text-sm font-semibold text-ink-2">
+            {t("demoPage.resultPanel.breakdownTitle")}
+          </h3>
           {!empty ? (
             <Badge tone={luhn.valid ? "success" : "danger"}>
-              {luhn.valid ? "Luhn validé" : "Luhn invalidé"}
+              {luhn.valid
+                ? t("demoPage.resultPanel.luhnValid")
+                : t("demoPage.resultPanel.luhnInvalid")}
             </Badge>
           ) : null}
         </div>

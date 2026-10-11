@@ -1,18 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Reveal } from "@/components/ui/reveal";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { voucherBrands } from "@/content/vouchers";
 import { cn } from "@/lib/utils";
 
 export function VoucherBrandsGrid() {
+  const t = useTranslations("brandsGrid");
+  const tBrands = useTranslations("voucherBrands");
+
   return (
     <Section id="cartes" className="border-t border-divider bg-app">
       <SectionHeading
-        eyebrow="Cartes illustrées"
-        title="6 familles de coupons prépayés"
-        description="Ces marques servent d'exemple à la maquette. Aucun format de code réel n'est reproduit ici, et aucune marque n'y est affiliée."
+        eyebrow={t("eyebrow")}
+        title={t("title")}
+        description={t("description")}
       />
 
       <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -41,7 +45,7 @@ export function VoucherBrandsGrid() {
 
                 <h3 className="mt-4 text-base font-semibold text-ink-1">{brand.name}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-ink-3">
-                  {brand.description}
+                  {tBrands(brand.id)}
                 </p>
               </div>
             </motion.article>

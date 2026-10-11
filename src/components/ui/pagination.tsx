@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Icon } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
 
@@ -15,20 +16,22 @@ export function Pagination({
   onPageChange: (page: number) => void;
   className?: string;
 }) {
+  const t = useTranslations("pagination");
+
   if (totalPages <= 1) return null;
 
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   return (
     <nav
-      aria-label="Pagination"
+      aria-label={t("ariaLabel")}
       className={cn("flex flex-wrap items-center justify-center gap-1", className)}
     >
       <button
         type="button"
         onClick={() => onPageChange(page - 1)}
         disabled={page <= 1}
-        aria-label="Page précédente"
+        aria-label={t("previous")}
         className="grid h-9 w-9 place-items-center rounded-lg border border-line-soft text-ink-2 transition-colors hover:bg-chip disabled:pointer-events-none disabled:opacity-40"
       >
         <Icon name="arrow-right" size={16} className="rotate-180" />
@@ -59,7 +62,7 @@ export function Pagination({
         type="button"
         onClick={() => onPageChange(page + 1)}
         disabled={page >= totalPages}
-        aria-label="Page suivante"
+        aria-label={t("next")}
         className="grid h-9 w-9 place-items-center rounded-lg border border-line-soft text-ink-2 transition-colors hover:bg-chip disabled:pointer-events-none disabled:opacity-40"
       >
         <Icon name="arrow-right" size={16} />

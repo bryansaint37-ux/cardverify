@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { InputCode } from "@/components/ui/input-code";
@@ -16,6 +17,7 @@ import { useCardInput } from "@/hooks/use-card-input";
  * la saisie ne quitte jamais la mémoire de l'onglet.
  */
 export function CardForm() {
+  const t = useTranslations();
   const { displayValue, maxLength, brand, validation, touched, setValue, reset } =
     useCardInput();
 
@@ -31,7 +33,7 @@ export function CardForm() {
           className="space-y-5"
         >
           <InputCode
-            label="Numéro à analyser"
+            label={t("demoPage.cardForm.numberLabel")}
             name="card-number"
             inputMode="numeric"
             placeholder="4242 4242 4242 4242"
@@ -40,9 +42,11 @@ export function CardForm() {
             onChange={(event) => setValue(event.target.value)}
             size="lg"
             state={showError ? "error" : validation.valid ? "success" : "default"}
-            hint="Les espaces sont ajoutés automatiquement. Analyse locale, à chaque frappe — aucune requête réseau n'est émise."
+            hint={t("demoPage.cardForm.numberHint")}
             suffix={
-              brand.id !== "unknown" ? <Badge tone="info">{brand.label}</Badge> : undefined
+              brand.id !== "unknown" ? (
+                <Badge tone="info">{t(`cardBrands.${brand.id}`)}</Badge>
+              ) : undefined
             }
           />
 
@@ -54,10 +58,13 @@ export function CardForm() {
               onClick={reset}
               disabled={validation.digits.length === 0}
             >
-              Effacer
+              {t("demoPage.cardForm.clear")}
             </Button>
             <span className="self-center text-xs text-ink-4">
-              {validation.digits.length} / {Math.max(...brand.lengths)} chiffres
+              {t("demoPage.cardForm.digitsCount", {
+                count: validation.digits.length,
+                max: Math.max(...brand.lengths),
+              })}
             </span>
           </div>
         </form>

@@ -1,0 +1,578 @@
+{
+  "site": {
+    "tagline": "Compreender a validação de números de cartão",
+    "description": "Card Verify é uma demonstração pedagógica do algoritmo de Luhn: valide a estrutura de um número de cartão, identifique a rede emissora e visualize cada etapa do cálculo, diretamente no seu navegador."
+  },
+  "common": {
+    "loading": "A carregar",
+    "skipToContent": "Ir para o conteúdo principal",
+    "home": "Início"
+  },
+  "pagination": {
+    "ariaLabel": "Paginação",
+    "previous": "Página anterior",
+    "next": "Página seguinte"
+  },
+  "api": {
+    "invalidJsonBody": "Corpo do pedido JSON inválido.",
+    "typeRequired": "O tipo de cupão é obrigatório e deve ser uma cadeia de caracteres.",
+    "amountRequired": "O montante é obrigatório e deve ser um número superior a zero.",
+    "currencyRequired": "A moeda é obrigatória e deve ser uma cadeia de caracteres.",
+    "codeRequired": "O código de recarga é obrigatório.",
+    "emailRequired": "O endereço de e-mail é obrigatório e deve ser válido.",
+    "formatInvalid": "Formato do código de recarga inválido.",
+    "verificationSaved": "Verificação registada.",
+    "internalError": "Erro interno do servidor."
+  },
+  "themeToggle": {
+    "switchToLight": "Mudar para o tema claro",
+    "switchToDark": "Mudar para o tema escuro"
+  },
+  "languageSwitcher": {
+    "label": "Idioma",
+    "ariaLabel": "Escolher o idioma de visualização"
+  },
+  "nav": {
+    "ariaMain": "Navegação principal",
+    "ariaMobile": "Navegação móvel",
+    "openMenu": "Abrir o menu",
+    "closeMenu": "Fechar o menu",
+    "testDemo": "Testar a demo",
+    "items": {
+      "verify": { "label": "Verificar", "description": "Simulação interativa de cupão" },
+      "dashboard": { "label": "Painel", "description": "Estatísticas sobre dados reais de verificação" },
+      "demo": { "label": "Demonstração", "description": "Testar o algoritmo ao vivo" },
+      "algorithm": { "label": "Algoritmo", "description": "O cálculo de Luhn, passo a passo" },
+      "faq": { "label": "Perguntas frequentes", "description": "" },
+      "about": { "label": "Sobre", "description": "" }
+    }
+  },
+  "footer": {
+    "groups": {
+      "product": {
+        "title": "Produto",
+        "items": {
+          "verify": "Verificar um cupão",
+          "demo": "Demonstração",
+          "algorithm": "O algoritmo de Luhn",
+          "faq": "Perguntas frequentes"
+        }
+      },
+      "resources": {
+        "title": "Recursos",
+        "items": {
+          "about": "Sobre o projeto",
+          "contact": "Contacto",
+          "sitemap": "Mapa do site"
+        }
+      },
+      "legal": {
+        "title": "Legal",
+        "items": {
+          "legalNotice": "Aviso legal",
+          "privacy": "Privacidade"
+        }
+      }
+    },
+    "copyright": "© {year} {name}.",
+    "noDataNotice": "Nenhum número introduzido é transmitido, registado ou armazenado."
+  },
+  "home": {
+    "meta": { "title": "Verificar um cupão" }
+  },
+  "hero": {
+    "badge": "Projeto académico — maquete pedagógica, não funcional",
+    "titleStart": "A interface premium de um",
+    "titleHighlight": "verificador de cupões",
+    "description": "Uma maquete criada num contexto escolar para ilustrar o aspeto de uma ferramenta de controlo de cupões pré-pagos. Nenhum código é efetivamente verificado: cada resultado apresentado abaixo é simulado localmente, sem ligação a qualquer serviço real.",
+    "ctaPrimary": "Ver a simulação",
+    "ctaSecondary": "Cartões em destaque",
+    "trust": {
+      "local": "Simulação 100% local",
+      "noData": "Nenhum dado transmitido",
+      "cards": "6 cartões ilustrados"
+    },
+    "previewLabel": "Pré-visualização da interface",
+    "previewBadge": "Fictício"
+  },
+  "presentation": {
+    "eyebrow": "Apresentação",
+    "title": "Uma maquete de interface, não um serviço real",
+    "description": "Este projeto ilustra o design que teria uma ferramenta de controlo de cupões pré-pagos — sem nunca implementar a lógica real.",
+    "steps": {
+      "detect": {
+        "title": "Reconhecimento do tipo de cupão",
+        "description": "A interface identificaria automaticamente a marca escolhida entre Transcash, PCS, Paysafecard, Neosurf, Steam ou Apple Gift Card."
+      },
+      "format": {
+        "title": "Controlo de formato",
+        "description": "O comprimento e o conjunto de caracteres introduzidos seriam comparados com um modelo teórico, apenas para fins ilustrativos."
+      },
+      "result": {
+        "title": "Resultado simulado",
+        "description": "Não existe nenhuma base de dados real por trás desta página: o veredito apresentado é gerado aleatoriamente, apenas para mostrar a interface."
+      }
+    },
+    "alertTitle": "O que esta página não faz",
+    "alertBody": "Nenhum código de cartão é enviado a um servidor, comparado com uma base de dados ou verificado junto de um emissor. Para conhecer o saldo real de um cartão, utilize exclusivamente o site oficial do seu emissor — nunca um site de terceiros."
+  },
+  "brandsGrid": {
+    "eyebrow": "Cartões em destaque",
+    "title": "6 famílias de cupões pré-pagos",
+    "description": "Estas marcas servem de exemplo para a maquete. Nenhum formato de código real é reproduzido aqui, e nenhuma marca está afiliada a este projeto."
+  },
+  "voucherBrands": {
+    "transcash": "Um cartão pré-pago recarregável, utilizado para pagar online sem conta bancária.",
+    "pcs": "Um cartão pré-pago recarregável, disponível em tabacarias.",
+    "paysafecard": "Um código pré-pago que permite pagar online sem IBAN nem cartão bancário.",
+    "neosurf": "Um cupão pré-pago aceite em numerosas plataformas online.",
+    "steam": "Um cartão-oferta destinado a carregar uma carteira Steam.",
+    "apple": "Um cartão-oferta destinado a carregar um ID Apple."
+  },
+  "cardFormats": {
+    "transcash": { "hint": "12 dígitos", "example": "123456789123" },
+    "pcs": { "hint": "10 caracteres alfanuméricos", "example": "A7218JH12X" },
+    "paysafecard": { "hint": "16 dígitos (hífenes opcionais)", "example": "1234-1234-1234-1234" },
+    "neosurf": { "hint": "10 caracteres alfanuméricos", "example": "ABC1234567" },
+    "steam": { "hint": "letras, dígitos e eventualmente hífenes", "example": "STEAM-5F27K-9QX3P" },
+    "apple": { "hint": "16 caracteres alfanuméricos", "example": "X7K9P2M4Q8R1T5W3" }
+  },
+  "voucherValidation": {
+    "empty": "Introduza um código para testar.",
+    "unknownType": "Tipo de cupão desconhecido: «{type}».",
+    "lengthExact": "{name} espera {count} caracteres, {provided} fornecido(s).",
+    "lengthRange": "{name} espera entre {min} e {max} caracteres, {provided} fornecido(s).",
+    "charset": "O código deve ser composto por {hint}."
+  },
+  "verifyPage": {
+    "meta": {
+      "title": "Verificar um cupão",
+      "description": "Formulário de verificação: seleção do tipo, montante, escolha da moeda e apresentação de um resultado claro."
+    },
+    "eyebrow": "Verificação",
+    "title": "Iniciar a verificação",
+    "description": "Selecione um tipo de cartão, uma moeda, um montante, um código de recarga e um endereço de e-mail para obter um veredito rápido.",
+    "formEyebrow": "Formulário de verificação",
+    "formTitle": "Informações do cupão",
+    "couponBadge": "Cupão",
+    "couponPhotoLabel": "Foto do cupão",
+    "cardTypeLabel": "Tipo de cartão",
+    "currencyLabel": "Moeda",
+    "amountLabel": "Montante",
+    "amountHint": "Introduza um montante para a verificação.",
+    "codeLabel": "Código de recarga",
+    "codeHintDefault": "Formato esperado: {hint}. Exemplo: {example}",
+    "codeHintSuccess": "✓ Formato correto",
+    "emailLabel": "Endereço de e-mail",
+    "emailHint": "Endereço de contacto associado ao cupão.",
+    "footerNote": "Processamento rápido dos dados para apresentar um veredito.",
+    "submit": "Iniciar verificação",
+    "loadingPhases": {
+      "preparing": "A preparar…",
+      "analyzing": "A analisar dados…",
+      "finalizing": "A finalizar o veredito…"
+    },
+    "errors": {
+      "invalidEmail": "Introduza um endereço de e-mail válido.",
+      "invalidAmount": "Introduza um montante superior a 0.",
+      "missingCode": "Introduza o código de recarga.",
+      "invalidServerResponse": "Resposta JSON inválida do servidor.",
+      "verificationFailed": "A verificação falhou.",
+      "unableToVerify": "Não foi possível verificar o cupão."
+    },
+    "result": {
+      "eyebrow": "Resultado",
+      "title": "Veredito",
+      "responsiveBadge": "Responsivo",
+      "analyzing": "A analisar",
+      "analyzingDetail": "O sistema está a preparar o veredito, aguarde um momento.",
+      "balanceTitle": "Saldo",
+      "balanceDetailAmount": "O montante introduzido é apresentado como saldo.",
+      "balanceDetailZero": "O veredito apresenta um saldo nulo para esta verificação.",
+      "typeLabel": "Tipo",
+      "currencyLabel": "Moeda",
+      "amountLabel": "Montante",
+      "codeLabel": "Código de recarga",
+      "emailLabel": "E-mail",
+      "placeholder": "Preencha o formulário para obter um resultado de verificação."
+    }
+  },
+  "cardBrands": {
+    "visa": "Visa",
+    "mastercard": "Mastercard",
+    "amex": "American Express",
+    "discover": "Discover",
+    "jcb": "JCB",
+    "diners": "Diners Club",
+    "unionpay": "UnionPay",
+    "maestro": "Maestro",
+    "unknown": "Rede desconhecida"
+  },
+  "demoPage": {
+    "meta": {
+      "title": "Demonstração interativa",
+      "description": "Analise ao vivo a estrutura de um número de cartão: deteção da rede, controlo de comprimento e cálculo de Luhn decomposto dígito a dígito. Tudo é executado no seu navegador."
+    },
+    "eyebrow": "Demonstração",
+    "title": "Analise um número, dígito a dígito",
+    "description": "Introduza um número de teste e observe os quatro controlos a serem reavaliados a cada tecla premida. O cálculo completo permanece neste separador.",
+    "warningTitle": "Não utilize um cartão real",
+    "warningBody": "Esta ferramenta é uma demonstração pedagógica. Não contacta nenhum banco e não pode confirmar a existência de um cartão. Os números de teste propostos abaixo são suficientes para compreender tudo.",
+    "infoTitle": "Porque é que isto é seguro aqui",
+    "infoBody": "Nenhuma chamada de rede é desencadeada pela introdução de dados, e nada é escrito no armazenamento do navegador. Pode verificar isto por si mesmo: abra o separador «Rede» das ferramentas de desenvolvimento e digite um número — a lista de pedidos permanece vazia. Em produção, um formulário de pagamento deve de qualquer forma passar por um fornecedor certificado PCI DSS, nunca pelo seu próprio servidor.",
+    "cardForm": {
+      "numberLabel": "Número a analisar",
+      "numberHint": "Os espaços são adicionados automaticamente. Análise local, a cada tecla premida — nenhum pedido de rede é emitido.",
+      "clear": "Limpar",
+      "digitsCount": "{count} / {max} dígitos"
+    },
+    "cardPreview": {
+      "demoLabel": "Demonstração",
+      "testNumber": "NÚMERO DE TESTE",
+      "validStructure": "Estrutura válida",
+      "pending": "Pendente"
+    },
+    "sampleNumbers": {
+      "title": "Números de teste públicos",
+      "description": "Publicados pelas próprias redes para ambientes de desenvolvimento. Não correspondem a nenhuma conta.",
+      "invalidExampleTitle": "Último dígito alterado: a soma de Luhn falha",
+      "invalidExampleLabel": "Exemplo inválido",
+      "brandDigits": "{brand} — {count} dígitos"
+    },
+    "resultPanel": {
+      "checks": {
+        "format": "Formato",
+        "formatDetail": "{count, plural, one {# dígito} other {# dígitos}} — esperado: 12 a 19",
+        "network": "Rede emissora",
+        "networkUnknown": "Prefixo IIN não reconhecido",
+        "networkDetected": "{brand} — prefixo identificado",
+        "networkLength": "Comprimento da rede",
+        "networkLengthUnknown": "Rede desconhecida, comprimento não verificável",
+        "networkLengthDetail": "{brand} espera {lengths} dígitos",
+        "luhnSum": "Soma de Luhn",
+        "luhnSumDetail": "Total {sum} — resto {remainder} módulo 10"
+      },
+      "emptyTitle": "A aguardar um número",
+      "emptyDetail": "O resultado será apresentado assim que começar a digitar.",
+      "validTitle": "Estrutura consistente",
+      "validDetail": "O número respeita o formato, o intervalo da rede e a soma de Luhn.",
+      "invalidTitle": "Estrutura inconsistente",
+      "invalidDetail": "Pelo menos um controlo falhou — ver detalhe abaixo.",
+      "disclaimer": "«Estrutura consistente» significa apenas que os dígitos estão matematicamente bem formados. Isto não diz nada sobre a existência do cartão, o seu saldo ou a sua validade junto de um banco.",
+      "breakdownTitle": "Decomposição do cálculo",
+      "luhnValid": "Luhn válido",
+      "luhnInvalid": "Luhn inválido"
+    },
+    "luhnSteps": {
+      "placeholder": "Introduza um número para ver o cálculo a desenrolar-se dígito a dígito.",
+      "digitDoubledTitle": "Dígito {digit} duplicado → {value}",
+      "digitUnchangedTitle": "Dígito {digit} inalterado",
+      "sum": "Soma:",
+      "modulo": "{sum} mod 10 =",
+      "doubledLegend": "dígito duplicado"
+    }
+  },
+  "cardValidation": {
+    "empty": "Introduza um número para verificar.",
+    "nonDigit": "O número contém caracteres não numéricos.",
+    "tooShort": "Número demasiado curto: {count, plural, one {# dígito} other {# dígitos}} de um mínimo de 12.",
+    "tooLong": "Número demasiado longo: {count} dígitos, máximo 19.",
+    "unknownBrand": "Nenhuma rede conhecida corresponde a este prefixo IIN.",
+    "invalidLength": "{brand} espera {lengths} dígitos, {count} fornecidos.",
+    "lengthsSeparator": " ou ",
+    "checksum": "A soma de controlo de Luhn está incorreta."
+  },
+  "dashboardPage": {
+    "meta": {
+      "title": "Painel",
+      "description": "Estatísticas, pesquisa, filtro e paginação sobre as verificações efetivamente submetidas a partir de /verifier."
+    },
+    "eyebrow": "Administração",
+    "title": "Painel",
+    "description": "Cada verificação submetida a partir da página «Verificar» é registada aqui, formato válido ou não.",
+    "logout": "Terminar sessão",
+    "stats": {
+      "shown": "Verificações apresentadas",
+      "shownHint": "{count} no total",
+      "plausible": "Veredictos «plausíveis»",
+      "plausibleHintPercent": "{percent}% do filtro atual",
+      "plausibleHintEmpty": "—",
+      "totalAmount": "Montante acumulado",
+      "totalAmountHint": "Soma dos montantes introduzidos durante as verificações",
+      "trackedTypes": "Tipos de cartão monitorizados",
+      "trackedTypesHint": "Transcash, PCS, Paysafecard, Neosurf, Steam, Apple"
+    },
+    "charts": {
+      "byBrandTitle": "Verificações por tipo de cartão",
+      "byBrandAriaLabel": "Número de verificações por tipo de cartão",
+      "byDayTitle": "Verificações nos últimos {days} dias",
+      "byDayAriaLabel": "Número de verificações por dia, nos últimos {days} dias"
+    },
+    "filters": {
+      "searchLabel": "Pesquisa",
+      "searchPlaceholder": "Código ou nome do cartão…",
+      "refresh": "Atualizar",
+      "typeFilterLabel": "Filtrar por tipo de cartão",
+      "allTypes": "Todos"
+    },
+    "table": {
+      "cardColumn": "Cartão",
+      "codeColumn": "Código de recarga",
+      "statusColumn": "Estado",
+      "amountColumn": "Montante",
+      "dateColumn": "Data",
+      "actionColumn": "Ação",
+      "deleteLabel": "Eliminar a entrada {brand} {code}",
+      "empty": "Nenhuma entrada corresponde a estes filtros.",
+      "status": {
+        "plausible": "Plausível (simulado)",
+        "suspect": "Suspeito (simulado)",
+        "invalid": "Formato inválido"
+      }
+    },
+    "login": {
+      "title": "Acesso de administrador",
+      "description": "Introduza a palavra-passe para aceder ao painel.",
+      "passwordLabel": "Palavra-passe",
+      "submit": "Iniciar sessão",
+      "connecting": "A ligar…",
+      "accessDenied": "Acesso negado.",
+      "serverUnreachable": "Não foi possível contactar o servidor. Tente novamente.",
+      "footnote": "Acesso restrito: este painel dá acesso às verificações efetivamente submetidas pelos visitantes do site."
+    }
+  },
+  "algorithmPage": {
+    "meta": {
+      "title": "O algoritmo de Luhn explicado",
+      "description": "Como funciona o algoritmo de Luhn: percurso da direita para a esquerda, duplicação de um dígito em cada dois, redução módulo 9 e teste módulo 10. Com o código TypeScript comentado e a tabela de prefixos IIN."
+    },
+    "eyebrow": "Documentação",
+    "title": "O algoritmo de Luhn, em detalhe",
+    "description": "Patenteado em 1960 por Hans Peter Luhn, engenheiro da IBM, este cálculo equipa hoje os números de cartão bancário, os IMEI de telefones e vários identificadores nacionais.",
+    "principle": {
+      "title": "Para que serve uma soma de controlo",
+      "p1": "Uma soma de controlo acrescenta redundância a uma sequência de dígitos para detetar erros de transmissão ou de introdução. O último dígito de um número de cartão, chamado {key}, não é escolhido livremente: é calculado a partir de todos os anteriores.",
+      "p1Key": "dígito de controlo",
+      "p2Before": "Luhn deteta",
+      "p2Percent": "100%",
+      "p2After": "dos erros relativos a um único dígito, e a quase totalidade das inversões de dois dígitos adjacentes — os dois erros de digitação mais comuns. O seu limite conhecido: não distingue a inversão"
+    },
+    "steps": {
+      "title": "O cálculo, passo a passo",
+      "items": {
+        "step1": "Escrever o número e lê-lo da direita para a esquerda, começando pelo dígito de controlo.",
+        "step2": "Duplicar um dígito em cada dois, começando pelo penúltimo (o dígito de controlo nunca é duplicado).",
+        "step3": "Se uma duplicação ultrapassar 9, subtrair-lhe 9 — o que equivale a somar os seus dois dígitos.",
+        "step4": "Somar todos os valores obtidos.",
+        "step5": "Se a soma for divisível por 10, o número é estruturalmente consistente."
+      }
+    },
+    "example": {
+      "title": "Exemplo com 8 dígitos",
+      "intro": "Tomemos {number}. A linha superior indica o dígito original, a inferior o seu valor após o processamento. O último {lastDigit} é o dígito de controlo: nunca é duplicado.",
+      "tableCaption": "Decomposição do cálculo de Luhn para o número 4539 1489",
+      "summary": "Soma: 8 + 5 + 6 + 9 + 2 + 4 + 7 + 9 = {total}. Como {total} módulo 10 é 0, a estrutura é consistente. Altere um único dígito e o resto deixa de ser nulo: é todo o interesse da soma de controlo. As células azuis assinalam os dígitos duplicados."
+    },
+    "implementation": {
+      "title": "Implementação TypeScript",
+      "description": "Uma função pura, sem dependências, com cerca de quinze linhas. A versão completa do site devolve ainda o detalhe de cada etapa, para a apresentação pedagógica.",
+      "sourceNote": "Código-fonte completo e comentado:"
+    },
+    "prefixes": {
+      "title": "Prefixos IIN e comprimentos por rede",
+      "description": "Luhn não diz nada sobre a rede emissora. Esta deduz-se a partir dos primeiros dígitos, o IIN ({term}), normalizado pela ISO/IEC 7812.",
+      "term": "Issuer Identification Number",
+      "networkColumn": "Rede",
+      "lengthsColumn": "Comprimentos",
+      "cvcColumn": "Código de segurança",
+      "cvcDigits": "{count} dígitos"
+    },
+    "limits": {
+      "title": "O que Luhn não faz",
+      "alertBody": "Um número validado por Luhn não é um número válido. É simplesmente bem formado. O algoritmo ignora a existência da conta, o seu saldo, a sua data de validade e o seu estado. Gerar sequências de dígitos que passam no teste é trivial — é precisamente por isso que as redes de pagamento se baseiam numa autorização bancária online, nunca numa soma de controlo.",
+      "conclusion": "O uso legítimo de Luhn do lado do cliente resume-se, portanto, a um ponto: evitar uma ida e volta de rede desnecessária quando a introdução contém manifestamente um erro de digitação."
+    },
+    "ctaTry": "Experimentar na demonstração",
+    "ctaFaq": "Perguntas frequentes"
+  },
+  "aboutPage": {
+    "meta": {
+      "title": "Sobre o projeto",
+      "description": "Card Verify é um projeto pedagógico de código aberto construído com Next.js 15, TypeScript e Tailwind CSS para ilustrar o algoritmo de Luhn e as boas práticas de um formulário de pagamento."
+    },
+    "eyebrow": "O projeto",
+    "title": "Um site para aprender, não para verificar",
+    "description": "Card Verify existe para tornar visível um cálculo que a maioria dos formulários de pagamento executa em silêncio.",
+    "why": {
+      "title": "Porquê este projeto",
+      "p1": "Quando um formulário apresenta «número de cartão inválido» mesmo antes de ter contactado o banco, está a aplicar o algoritmo de Luhn. Este controlo está em toda a parte e, no entanto, raramente é explicado: muitas vezes retém-se apenas que «verifica o cartão», o que é falso e induz confusão.",
+      "p2": "Este site separa, por isso, claramente os três níveis: a coerência matemática do número, a identificação da rede emissora, e a autorização bancária — que, essa sim, não tem nada a ver com um navegador."
+    },
+    "stack": {
+      "title": "Escolhas técnicas",
+      "items": {
+        "nextjs": { "name": "Next.js 15", "detail": "App Router, componentes de servidor por omissão, metadados e mapa do site gerados pela framework." },
+        "typescript": { "name": "TypeScript", "detail": "Modo estrito, tipos explícitos em toda a lógica de negócio, nenhuma asserção `any`." },
+        "tailwind": { "name": "Tailwind CSS v4", "detail": "Tema declarado em CSS, nenhuma folha de estilos fora do sistema de utilitários." },
+        "zeroDep": { "name": "Zero dependências de negócio", "detail": "O algoritmo, a formatação e a deteção de rede cabem em três ficheiros autónomos." }
+      }
+    },
+    "scope": {
+      "title": "Âmbito deliberadamente limitado",
+      "alertBody": "Card Verify não é um serviço de verificação bancária e nunca o será. Não consulta nenhuma rede de pagamento, não expõe nenhuma base de dados BIN e não conserva nenhuma introdução de dados. Qualquer utilização destinada a testar números reais está fora do âmbito do projeto.",
+      "p1": "Em produção, um formulário de pagamento deve confiar a introdução de dados a um fornecedor certificado {pciDss}, através de um campo alojado ou de um token. A sua aplicação nunca deveria ver um número de cartão em texto simples, muito menos registá-lo.",
+      "p2": "O controlo de Luhn do lado do cliente mantém, ainda assim, o seu interesse: mostrar instantaneamente um erro de digitação, sem rede e sem espera."
+    }
+  },
+  "contactPage": {
+    "meta": {
+      "title": "Contacto",
+      "description": "Uma pergunta sobre o algoritmo de Luhn, uma correção a propor ou uma sugestão pedagógica? Escreva à equipa do Card Verify."
+    },
+    "eyebrow": "Contacto",
+    "title": "Escreva-nos",
+    "description": "Correções, esclarecimentos técnicos, sugestões pedagógicas: todos os comentários são bem-vindos.",
+    "mockNotice": "Este formulário é uma maquete: não envia nada e não conserva nada. Ligue-o ao seu próprio serviço de envio (rota API, fornecedor transacional) antes de qualquer colocação online.",
+    "nameLabel": "Nome",
+    "namePlaceholder": "Maria Silva",
+    "emailLabel": "Endereço de e-mail",
+    "emailPlaceholder": "maria@exemplo.pt",
+    "subjectLabel": "Assunto",
+    "subjectOptions": {
+      "question": "Pergunta sobre o algoritmo",
+      "correction": "Reportar um erro",
+      "suggestion": "Sugestão pedagógica",
+      "other": "Outro"
+    },
+    "messageLabel": "Mensagem",
+    "messagePlaceholder": "A sua mensagem…",
+    "messageHint": "Nunca inclua um número de cartão real numa mensagem.",
+    "submit": "Enviar (desativado na demonstração)"
+  },
+  "faqPage": {
+    "meta": {
+      "title": "Perguntas frequentes",
+      "description": "O que o Card Verify realmente verifica, para onde vão os seus dados introduzidos, porque é que um número validado por Luhn pode ser recusado por um banco, e como reutilizar o código."
+    },
+    "eyebrow": "Ajuda",
+    "title": "Perguntas frequentes",
+    "description": "As respostas às confusões mais comuns em torno da validação de um número de cartão.",
+    "entries": {
+      "real": {
+        "question": "O Card Verify verifica se um cartão é real ou tem fundos?",
+        "answer": "Não, e esta distinção é essencial. O algoritmo de Luhn apenas testa a coerência matemática de uma sequência de dígitos. Ignora totalmente a existência da conta, o seu saldo, a sua data de validade ou o seu estado. Só uma instituição bancária, através da sua rede de autorização, pode responder a estas perguntas."
+      },
+      "dataSent": {
+        "question": "Os meus dados introduzidos são enviados para algum lado?",
+        "answer": "Não. Toda a verificação é executada em JavaScript no seu navegador. Nenhum número é transmitido a um servidor, registado num log ou armazenado localmente. Pode constatar isto abrindo o separador «Rede» das ferramentas de desenvolvimento: nenhum pedido é emitido durante a introdução de dados."
+      },
+      "realNumber": {
+        "question": "Tenho de introduzir um número de cartão real?",
+        "answer": "De forma alguma. Este site é uma demonstração pedagógica: utilize os números de teste públicos fornecidos na página de demonstração. São publicados pelas próprias redes para ambientes de desenvolvimento e não correspondem a nenhuma conta."
+      },
+      "purpose": {
+        "question": "Para que serve concretamente o algoritmo de Luhn?",
+        "answer": "Para detetar erros de introdução de dados antes de qualquer chamada de rede. Deteta a totalidade dos erros num único dígito e a maioria das inversões de dois dígitos adjacentes. Um formulário que o implementa evita um pedido desnecessário e apresenta o erro imediatamente. Também se encontra em números IMEI, identificadores nacionais e certos códigos de barras."
+      },
+      "networkDetection": {
+        "question": "Porque é que a rede é detetada mesmo antes de terminar a introdução de dados?",
+        "answer": "Porque os primeiros dígitos, chamados IIN ou BIN (Issuer Identification Number), designam o emissor. Um 4 inicial sinaliza a Visa, o intervalo 51-55 e 2221-2720 a Mastercard, 34 e 37 a American Express. Esta tabela de prefixos é pública e normalizada pela ISO/IEC 7812."
+      },
+      "refused": {
+        "question": "Um número validado por Luhn pode ser recusado pelo banco?",
+        "answer": "Constantemente. Luhn é um filtro de primeiro nível: elimina as introduções inconsistentes. Um número pode passar este teste e ainda assim designar um cartão expirado, bloqueado, com limite atingido ou simplesmente nunca emitido. O inverso não é verdade: um número que falha o teste de Luhn está certamente errado."
+      },
+      "reuse": {
+        "question": "Posso reutilizar este código no meu projeto?",
+        "answer": "Sim. As funções em src/lib/luhn.ts e src/lib/validate-card.ts são autónomas, sem dependências externas, e tipadas. Lembre-se, no entanto, de que um formulário de pagamento em produção deve passar por um fornecedor certificado PCI DSS: a sua aplicação nunca deveria manipular um número de cartão em texto simples."
+      },
+      "noJs": {
+        "question": "O site funciona sem JavaScript?",
+        "answer": "O conteúdo pedagógico — páginas, explicações, perguntas frequentes — é renderizado no servidor e permanece totalmente legível. Apenas o formulário interativo da página de demonstração requer JavaScript, uma vez que o cálculo é deliberadamente feito do lado do cliente."
+      }
+    },
+    "ctaTitle": "Uma pergunta sem resposta?",
+    "ctaDescription": "O projeto é pedagógico e está aberto a sugestões. Escreva-nos, ou leia primeiro a explicação completa do algoritmo.",
+    "ctaContact": "Escreva-nos",
+    "ctaDocs": "Ler a documentação"
+  },
+  "legalPage": {
+    "meta": {
+      "title": "Aviso legal",
+      "description": "Editor, alojamento, propriedade intelectual e limitação de responsabilidade do site de demonstração Card Verify."
+    },
+    "title": "Aviso legal",
+    "lastUpdate": "Última atualização: a completar aquando da publicação de {name}.",
+    "sections": {
+      "publisher": {
+        "title": "Editor do site",
+        "body": "Este site é um projeto de demonstração pedagógica publicado a título não comercial. Substitua este parágrafo pela firma, a forma jurídica, o endereço da sede, o número de registo e o nome do diretor de publicação antes de qualquer colocação online real."
+      },
+      "hosting": {
+        "title": "Alojamento",
+        "body": "Indique aqui o nome, o endereço postal e o número de telefone do seu fornecedor de alojamento, em conformidade com a regulamentação local aplicável sobre a indicação do alojamento."
+      },
+      "purpose": {
+        "title": "Objeto do serviço",
+        "body": "O Card Verify ilustra o funcionamento do algoritmo de Luhn. Não é um serviço de verificação bancária, não consulta nenhuma instituição financeira e não permite em caso algum confirmar a existência, a validade ou a solvência de um meio de pagamento."
+      },
+      "liability": {
+        "title": "Limitação de responsabilidade",
+        "body": "O conteúdo é fornecido a título informativo, sem garantia de exatidão nem de exaustividade. O editor não poderá ser responsabilizado por um uso indevido da demonstração, nem pelas consequências de uma decisão tomada apenas com base nos resultados apresentados."
+      },
+      "ip": {
+        "title": "Propriedade intelectual",
+        "body": "As marcas e os logótipos das redes de pagamento citadas pertencem aos respetivos titulares e são mencionados apenas para fins descritivos. Não é sugerida nenhuma parceria nem afiliação."
+      }
+    }
+  },
+  "privacyPage": {
+    "meta": {
+      "title": "Privacidade",
+      "description": "O Card Verify não recolhe nenhum dado pessoal: os números introduzidos são analisados localmente no navegador e nunca são transmitidos, registados ou armazenados."
+    },
+    "title": "Política de privacidade",
+    "intro": "O princípio é simples: o que não é recolhido não pode vazar.",
+    "verifyAlertTitle": "Verificável em trinta segundos",
+    "verifyAlertBody": "Abra as ferramentas de desenvolvimento do seu navegador, separador «Rede», e depois introduza um número na página de demonstração. Nenhum pedido aparece.",
+    "sections": {
+      "noCollection": {
+        "title": "Nenhuma recolha de números",
+        "body": "Os números introduzidos na demonstração são processados exclusivamente pelo código JavaScript executado no seu navegador. Nunca são transmitidos a nenhum servidor, não aparecem em nenhum registo e não são escritos nem em cookies, nem no armazenamento local, nem no armazenamento de sessão."
+      },
+      "cookies": {
+        "title": "Cookies",
+        "body": "O site deposita apenas um cookie técnico para memorizar a sua preferência de idioma. Nenhum rastreador publicitário, nenhuma ferramenta de medição de audiência de terceiros está integrada."
+      },
+      "logs": {
+        "title": "Registos técnicos",
+        "body": "O fornecedor de alojamento pode conservar registos de acesso (endereço IP, página solicitada, data/hora) por motivos de segurança e de exploração. Estes registos nunca contêm o conteúdo do formulário, uma vez que este nunca sai do navegador."
+      },
+      "fonts": {
+        "title": "Tipos de letra e recursos externos",
+        "body": "O tipo de letra Inter é carregado através do next/font, que o aloja automaticamente no momento da compilação. Nenhum pedido é, portanto, dirigido a um serviço de terceiros durante a sua visita."
+      },
+      "rights": {
+        "title": "Os seus direitos",
+        "body": "Uma vez que nenhum dado pessoal é recolhido pelo próprio site, não existe tratamento sobre o qual exercer um direito de acesso, retificação ou apagamento. Para qualquer questão, a página de contacto permanece à sua disposição."
+      }
+    }
+  },
+  "notFoundPage": {
+    "meta": { "title": "Página não encontrada" },
+    "title": "Esta página não existe",
+    "description": "O link pode estar desatualizado, ou o endereço pode conter um erro de digitação — infelizmente, o algoritmo de Luhn não ajuda com URLs.",
+    "ctaHome": "Voltar ao início",
+    "ctaDemo": "Ir para a demonstração"
+  },
+  "errorPage": {
+    "title": "Ocorreu um erro",
+    "description": "A renderização desta página falhou. Tentar novamente costuma resolver; se o problema persistir, volte ao início.",
+    "reference": "Referência: {digest}",
+    "retry": "Tentar novamente",
+    "ctaHome": "Voltar ao início"
+  },
+  "loadingPage": {
+    "label": "A carregar…"
+  }
+}

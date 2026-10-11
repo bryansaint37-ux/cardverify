@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
+import { getTranslations } from "next-intl/server";
 import { voucherBrands } from "@/content/vouchers";
-import { validateVoucherFormat } from "@/lib/validate-voucher";
+import { formatVoucherIssue, validateVoucherFormat } from "@/lib/validate-voucher";
 import { prisma } from "@/lib/prisma";
 
 type VerifyRequestBody = {
@@ -17,6 +18,8 @@ function randomDemoReference() {
 }
 
 export async function POST(request: Request) {
+  const t = await getTranslations();
+
   try {
     let body: VerifyRequestBody;
 
@@ -26,7 +29,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           status: "error",
-          message: "Corps de requête JSON invalide.",
+          message: t("api.invalidJsonBody"),
         },
         { status: 400 },
       );
@@ -38,7 +41,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           status: "error",
-          message: "Le type de coupon est requis et doit être une chaîne.",
+          message: t("api.typeRequired"),
         },
         { status: 400 },
       );
@@ -48,7 +51,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           status: "error",
-          message: "Le montant est requis et doit être un nombre supérieur à zéro.",
+          message: t("api.amountRequired"),
         },
         { status: 400 },
       );
@@ -58,7 +61,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           status: "error",
-          message: "La devise est requise et doit être une chaîne.",
+          message: t("api.currencyRequired"),
         },
         { status: 400 },
       );
@@ -68,7 +71,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           status: "error",
-          message: "Le code de recharge est requis.",
+          message: t("api.codeRequired"),
         },
         { status: 400 },
       );
@@ -78,7 +81,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           status: "error",
-          message: "L'adresse e-mail est requise et doit être valide.",
+          message: t("api.emailRequired"),
         },
         { status: 400 },
       );
@@ -90,13 +93,13 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           status: "error",
-          message: `Type de coupon inconnu : « ${type} ».`,
+          message: t("voucherValidation.unknownType", { type }),
         },
         { status: 400 },
       );
     }
 
-    const format = validateVoucherFormat(type, rechargeCode, brand.name);
+    const format = validateVoucherFormat(type, rechargeCode);
     const demoReference = randomDemoReference();
 
     if (!format.valid) {
@@ -115,11 +118,11 @@ export async function POST(request: Request) {
 
       return NextResponse.json({
         status: "error",
-        message: "Format invalide du code de recharge.",
+        message: t("api.formatInvalid"),
         result: {
           type: brand.id,
           formatValid: false,
-          issues: format.issues.map((issue) => issue.message),
+          issues: format.issues.map((issue) => formatVoucherIssue(t, type, brand.name, issue)),
         },
       });
     }
@@ -140,7 +143,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       status: "success",
-      message: "Vérification enregistrée.",
+      message: t("api.verificationSaved"),
       result: {
         id: saved.id,
         type: brand.id,
@@ -157,7 +160,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         status: "error",
-        message: "Erreur interne du serveur.",
+        message: t("api.internalError"),
       },
       { status: 500 },
     );

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/icon";
 import { mainNav } from "@/config/nav";
@@ -11,6 +12,7 @@ import { cn } from "@/lib/utils";
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const t = useTranslations("nav");
 
   // Referme le panneau après une navigation.
   useEffect(() => {
@@ -42,7 +44,7 @@ export function MobileNav() {
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-controls="mobile-menu"
-        aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+        aria-label={open ? t("closeMenu") : t("openMenu")}
         className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-ink-2 transition-colors hover:bg-chip hover:text-ink-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
         <AnimatePresence mode="wait" initial={false}>
@@ -69,12 +71,13 @@ export function MobileNav() {
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-x-0 top-16 z-40 border-b border-line bg-header backdrop-blur-xl"
           >
-            <nav className="flex flex-col gap-1 px-4 py-6" aria-label="Navigation mobile">
+            <nav className="flex flex-col gap-1 px-4 py-6" aria-label={t("ariaMobile")}>
               {mainNav.map((item, index) => {
                 const active =
                   item.href === "/"
                     ? pathname === "/"
                     : pathname.startsWith(item.href);
+                const description = t(`items.${item.key}.description`);
 
                 return (
                   <motion.div
@@ -93,10 +96,10 @@ export function MobileNav() {
                           : "text-ink-2 hover:bg-chip hover:text-ink-1",
                       )}
                     >
-                      <span className="block">{item.label}</span>
-                      {item.description ? (
+                      <span className="block">{t(`items.${item.key}.label`)}</span>
+                      {description ? (
                         <span className="mt-0.5 block text-sm font-normal text-ink-4">
-                          {item.description}
+                          {description}
                         </span>
                       ) : null}
                     </Link>

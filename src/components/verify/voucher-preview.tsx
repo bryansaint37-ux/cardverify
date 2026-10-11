@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import type { VoucherBrand } from "@/content/vouchers";
 import { getCardFormat } from "@/lib/card-formats";
 import { cn } from "@/lib/utils";
@@ -136,6 +137,7 @@ const BrandLogo = ({ brand }: { brand: VoucherBrand }) => {
  * demande jamais ces informations.
  */
 export function VoucherPreview({ brand, code }: { brand: VoucherBrand; code: string }) {
+  const t = useTranslations("verifyPage");
   const format = getCardFormat(brand.id);
   const masked = code
     ? code
@@ -173,7 +175,7 @@ export function VoucherPreview({ brand, code }: { brand: VoucherBrand; code: str
               <BrandLogo brand={brand} />
             </span>
             <div className="min-w-0">
-              <p className="text-[10px] uppercase tracking-[0.4em] text-white/70">Photo du coupon</p>
+              <p className="text-[10px] uppercase tracking-[0.4em] text-white/70">{t("couponPhotoLabel")}</p>
               <p className="truncate text-sm font-semibold text-white">{brand.name}</p>
             </div>
           </div>

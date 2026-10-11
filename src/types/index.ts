@@ -43,17 +43,14 @@ export type LuhnResult = {
   steps: LuhnStep[];
 };
 
-export type ValidationIssue = {
-  code:
-    | "empty"
-    | "non-digit"
-    | "too-short"
-    | "too-long"
-    | "unknown-brand"
-    | "invalid-length"
-    | "checksum";
-  message: string;
-};
+export type ValidationIssue =
+  | { code: "empty" }
+  | { code: "non-digit" }
+  | { code: "too-short"; count: number }
+  | { code: "too-long"; count: number }
+  | { code: "unknown-brand" }
+  | { code: "invalid-length"; count: number }
+  | { code: "checksum" };
 
 export type CardValidation = {
   /** Numéro nettoyé (chiffres uniquement). */

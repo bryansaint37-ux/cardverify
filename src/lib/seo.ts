@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
+import { localeMeta, type Locale } from "@/i18n/locales";
 
 type BuildMetadataInput = {
   title: string;
@@ -8,6 +9,8 @@ type BuildMetadataInput = {
   path?: string;
   keywords?: string[];
   noIndex?: boolean;
+  /** Langue active — détermine le code `openGraph.locale`. */
+  locale?: Locale;
 };
 
 /**
@@ -20,8 +23,10 @@ export function buildMetadata({
   path = "/",
   keywords = [],
   noIndex = false,
+  locale,
 }: BuildMetadataInput): Metadata {
   const url = new URL(path, siteConfig.url).toString();
+  const ogLocale = locale ? localeMeta[locale].ogLocale : siteConfig.locale;
 
   return {
     title,
@@ -33,7 +38,7 @@ export function buildMetadata({
       : { index: true, follow: true },
     openGraph: {
       type: "website",
-      locale: siteConfig.locale,
+      locale: ogLocale,
       url,
       siteName: siteConfig.name,
       title,
@@ -48,14 +53,14 @@ export function buildMetadata({
 }
 
 /** Données structurées de l'organisation / du site. */
-export function websiteJsonLd() {
+export function websiteJsonLd(locale: string = siteConfig.lang) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: siteConfig.name,
     url: siteConfig.url,
     description: siteConfig.description,
-    inLanguage: siteConfig.lang,
+    inLanguage: locale,
   };
 }
 

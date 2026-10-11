@@ -1,31 +1,19 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { useLocale, useTranslations } from "next-intl";
+import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Icon } from "@/components/ui/icon";
 import type { VerificationRecord, VerificationStatus } from "@/types/verification-record";
 import { voucherBrands } from "@/content/vouchers";
 import { cn } from "@/lib/utils";
 
-const STATUS_LABEL: Record<VerificationStatus, string> = {
-  plausible: "Plausible (simulé)",
-  suspect: "Suspect (simulé)",
-  invalid: "Format invalide",
-};
-
 const STATUS_TONE: Record<VerificationStatus, "success" | "warning" | "danger"> = {
   plausible: "success",
   suspect: "warning",
   invalid: "danger",
 };
-
-const dateFormatter = new Intl.DateTimeFormat("fr-FR", {
-  day: "2-digit",
-  month: "2-digit",
-  year: "numeric",
-  hour: "2-digit",
-  minute: "2-digit",
-});
 
 function brandGradient(type: string): string {
   return (
@@ -42,10 +30,24 @@ export function VerificationTable({
   onDelete: (id: string) => void;
   deletingId?: string | null;
 }) {
+  const t = useTranslations("dashboardPage.table");
+  const locale = useLocale();
+  const dateFormatter = useMemo(
+    () =>
+      new Intl.DateTimeFormat(locale, {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    [locale],
+  );
+
   if (records.length === 0) {
     return (
       <div className="rounded-2xl border border-dashed border-line-soft p-10 text-center text-sm text-ink-4">
-        Aucune entrée ne correspond à ces filtres.
+        {t("empty")}
       </div>
     );
   }
@@ -56,22 +58,22 @@ export function VerificationTable({
         <thead className="bg-chip text-xs uppercase tracking-wide text-ink-4">
           <tr>
             <th scope="col" className="px-4 py-3 font-medium">
-              Carte
+              {t("cardColumn")}
             </th>
             <th scope="col" className="px-4 py-3 font-medium">
-              Code de recharge
+              {t("codeColumn")}
             </th>
             <th scope="col" className="px-4 py-3 font-medium">
-              Statut
+              {t("statusColumn")}
             </th>
             <th scope="col" className="px-4 py-3 font-medium">
-              Montant
+              {t("amountColumn")}
             </th>
             <th scope="col" className="px-4 py-3 font-medium">
-              Date
+              {t("dateColumn")}
             </th>
             <th scope="col" className="px-4 py-3 text-right font-medium">
-              Action
+              {t("actionColumn")}
             </th>
           </tr>
         </thead>
@@ -101,7 +103,7 @@ export function VerificationTable({
                 </td>
                 <td className="px-4 py-3 font-mono text-ink-2">{record.code}</td>
                 <td className="px-4 py-3">
-                  <Badge tone={STATUS_TONE[record.status]}>{STATUS_LABEL[record.status]}</Badge>
+                  <Badge tone={STATUS_TONE[record.status]}>{t(`status.${record.status}`)}</Badge>
                 </td>
                 <td className="px-4 py-3 tabular-nums text-ink-2">
                   {record.amount} {record.currency}
@@ -114,7 +116,7 @@ export function VerificationTable({
                     type="button"
                     onClick={() => onDelete(record.id)}
                     disabled={deletingId === record.id}
-                    aria-label={`Supprimer l'entrée ${record.brandLabel} ${record.code}`}
+                    aria-label={t("deleteLabel", { brand: record.brandLabel, code: record.code })}
                     className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-ink-4 transition-colors hover:bg-danger-bg hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger disabled:opacity-40"
                   >
                     <Icon name="trash" size={16} />

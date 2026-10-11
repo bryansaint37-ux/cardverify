@@ -1,11 +1,13 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/container";
 import { Logo } from "@/components/layout/logo";
 import { footerNav } from "@/config/nav";
 import { siteConfig } from "@/config/site";
 
-export function Footer() {
+export async function Footer() {
   const year = new Date().getFullYear();
+  const t = await getTranslations("footer");
 
   return (
     <footer className="border-t border-line bg-app">
@@ -16,8 +18,10 @@ export function Footer() {
           </div>
 
           {footerNav.map((group) => (
-            <div key={group.title}>
-              <h2 className="text-sm font-semibold text-ink-2">{group.title}</h2>
+            <div key={group.group}>
+              <h2 className="text-sm font-semibold text-ink-2">
+                {t(`groups.${group.group}.title`)}
+              </h2>
               <ul className="mt-4 space-y-3">
                 {group.items.map((item) => (
                   <li key={item.href}>
@@ -25,7 +29,7 @@ export function Footer() {
                       href={item.href}
                       className="text-sm text-ink-3 transition-colors hover:text-accent"
                     >
-                      {item.label}
+                      {t(`groups.${group.group}.items.${item.key}`)}
                     </Link>
                   </li>
                 ))}
@@ -36,11 +40,9 @@ export function Footer() {
 
         <div className="flex flex-col gap-4 border-t border-line py-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-ink-4">
-            © {year} {siteConfig.name}.
+            {t("copyright", { year, name: siteConfig.name })}
           </p>
-          <p className="text-xs text-ink-4">
-            Aucun numéro saisi n&apos;est transmis, journalisé ou stocké.
-          </p>
+          <p className="text-xs text-ink-4">{t("noDataNotice")}</p>
         </div>
       </Container>
     </footer>

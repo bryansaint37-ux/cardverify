@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import type { LuhnResult } from "@/types";
 import { cn } from "@/lib/utils";
 
@@ -9,12 +10,10 @@ import { cn } from "@/lib/utils";
  * lecture. Les chiffres doublés sont mis en évidence.
  */
 export function LuhnSteps({ luhn }: { luhn: LuhnResult }) {
+  const t = useTranslations("demoPage.luhnSteps");
+
   if (luhn.steps.length === 0) {
-    return (
-      <p className="text-sm text-ink-4">
-        Saisissez un numéro pour voir le calcul se dérouler chiffre par chiffre.
-      </p>
-    );
+    return <p className="text-sm text-ink-4">{t("placeholder")}</p>;
   }
 
   return (
@@ -34,8 +33,8 @@ export function LuhnSteps({ luhn }: { luhn: LuhnResult }) {
             )}
             title={
               step.doubled
-                ? `Chiffre ${step.digit} doublé → ${step.value}`
-                : `Chiffre ${step.digit} inchangé`
+                ? t("digitDoubledTitle", { digit: step.digit, value: step.value })
+                : t("digitUnchangedTitle", { digit: step.digit })
             }
           >
             <span className="text-ink-4">{step.digit}</span>
@@ -50,11 +49,11 @@ export function LuhnSteps({ luhn }: { luhn: LuhnResult }) {
 
       <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
         <p className="text-ink-3">
-          Somme :{" "}
+          {t("sum")}{" "}
           <span className="font-mono font-semibold text-ink-1">{luhn.sum}</span>
         </p>
         <p className="text-ink-3">
-          {luhn.sum} mod 10 ={" "}
+          {t("modulo", { sum: luhn.sum })}{" "}
           <span
             className={cn(
               "font-mono font-semibold",
@@ -66,7 +65,7 @@ export function LuhnSteps({ luhn }: { luhn: LuhnResult }) {
         </p>
         <p className="flex items-center gap-2 text-ink-4">
           <span className="inline-block h-2.5 w-2.5 rounded-sm bg-accent/40" />
-          chiffre doublé
+          {t("doubledLegend")}
         </p>
       </div>
     </div>

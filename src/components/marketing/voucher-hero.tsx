@@ -1,14 +1,15 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Icon, type IconName } from "@/components/ui/icon";
 
-const trustPoints: { icon: IconName; label: string }[] = [
-  { icon: "shield", label: "Simulation 100 % locale" },
-  { icon: "eye", label: "Aucune donnée transmise" },
-  { icon: "layers", label: "6 cartes illustrées" },
+const trustKeys: { icon: IconName; key: "local" | "noData" | "cards" }[] = [
+  { icon: "shield", key: "local" },
+  { icon: "eye", key: "noData" },
+  { icon: "layers", key: "cards" },
 ];
 
 const container: Variants = {
@@ -22,6 +23,8 @@ const item: Variants = {
 };
 
 export function VoucherHero() {
+  const t = useTranslations("hero");
+
   return (
     <section className="relative overflow-hidden bg-app">
       {/* Halos de dégradé animés — purement décoratifs. */}
@@ -52,16 +55,16 @@ export function VoucherHero() {
             className="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium text-ink-2"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-warning-icon" />
-            Projet étudiant — maquette pédagogique, non fonctionnelle
+            {t("badge")}
           </motion.span>
 
           <motion.h1
             variants={item}
             className="mt-6 text-balance text-4xl font-bold tracking-tight text-ink-1 sm:text-5xl lg:text-6xl"
           >
-            L&apos;interface premium d&apos;un{" "}
+            {t("titleStart")}{" "}
             <span className="bg-gradient-to-r from-sky-400 via-blue-300 to-indigo-400 bg-clip-text text-transparent">
-              vérificateur de coupons
+              {t("titleHighlight")}
             </span>
           </motion.h1>
 
@@ -69,10 +72,7 @@ export function VoucherHero() {
             variants={item}
             className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-ink-3"
           >
-            Une maquette réalisée dans un cadre scolaire pour illustrer à quoi
-            ressemblerait un outil de contrôle de coupons prépayés. Aucun code
-            n&apos;est réellement vérifié : chaque résultat affiché plus bas
-            est simulé localement, sans connexion à un quelconque service.
+            {t("description")}
           </motion.p>
 
           <motion.div
@@ -80,11 +80,11 @@ export function VoucherHero() {
             className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
           >
             <ButtonLink href="#verifier" size="lg">
-              Voir la simulation
+              {t("ctaPrimary")}
               <Icon name="arrow-right" size={18} />
             </ButtonLink>
             <ButtonLink href="#cartes" variant="outline" size="lg">
-              Cartes illustrées
+              {t("ctaSecondary")}
             </ButtonLink>
           </motion.div>
 
@@ -92,13 +92,13 @@ export function VoucherHero() {
             variants={item}
             className="mx-auto mt-14 grid max-w-xl grid-cols-1 gap-3 sm:grid-cols-3"
           >
-            {trustPoints.map((point) => (
+            {trustKeys.map((point) => (
               <div
-                key={point.label}
+                key={point.key}
                 className="glass flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm text-ink-2"
               >
                 <Icon name={point.icon} size={16} className="text-accent" />
-                {point.label}
+                {t(`trust.${point.key}`)}
               </div>
             ))}
           </motion.dl>
@@ -114,10 +114,10 @@ export function VoucherHero() {
           <div className="glass-strong rounded-2xl p-6 shadow-2xl">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium uppercase tracking-widest text-ink-4">
-                Aperçu de l&apos;interface
+                {t("previewLabel")}
               </span>
               <span className="rounded-full bg-warning-icon-bg px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-warning">
-                Fictif
+                {t("previewBadge")}
               </span>
             </div>
             <div className="mt-4 h-10 rounded-lg border border-line bg-input" />

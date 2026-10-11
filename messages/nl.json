@@ -1,0 +1,578 @@
+{
+  "site": {
+    "tagline": "Kaartnummervalidatie begrijpen",
+    "description": "Card Verify is een educatieve demonstratie van het Luhn-algoritme: controleer de structuur van een kaartnummer, identificeer het uitgevende netwerk en bekijk elke stap van de berekening, rechtstreeks in je browser."
+  },
+  "common": {
+    "loading": "Bezig met laden",
+    "skipToContent": "Naar de hoofdinhoud",
+    "home": "Home"
+  },
+  "pagination": {
+    "ariaLabel": "Paginering",
+    "previous": "Vorige pagina",
+    "next": "Volgende pagina"
+  },
+  "api": {
+    "invalidJsonBody": "Ongeldige JSON-aanvraagtekst.",
+    "typeRequired": "Het vouchertype is verplicht en moet een tekenreeks zijn.",
+    "amountRequired": "Het bedrag is verplicht en moet een getal groter dan nul zijn.",
+    "currencyRequired": "De valuta is verplicht en moet een tekenreeks zijn.",
+    "codeRequired": "De oplaadcode is verplicht.",
+    "emailRequired": "Het e-mailadres is verplicht en moet geldig zijn.",
+    "formatInvalid": "Ongeldig formaat van de oplaadcode.",
+    "verificationSaved": "Controle opgeslagen.",
+    "internalError": "Interne serverfout."
+  },
+  "themeToggle": {
+    "switchToLight": "Overschakelen naar licht thema",
+    "switchToDark": "Overschakelen naar donker thema"
+  },
+  "languageSwitcher": {
+    "label": "Taal",
+    "ariaLabel": "Kies de weergavetaal"
+  },
+  "nav": {
+    "ariaMain": "Hoofdnavigatie",
+    "ariaMobile": "Mobiele navigatie",
+    "openMenu": "Menu openen",
+    "closeMenu": "Menu sluiten",
+    "testDemo": "Demo uitproberen",
+    "items": {
+      "verify": { "label": "Controleren", "description": "Interactieve voucher-simulatie" },
+      "dashboard": { "label": "Dashboard", "description": "Statistieken over echte controlegegevens" },
+      "demo": { "label": "Demonstratie", "description": "Het algoritme live uitproberen" },
+      "algorithm": { "label": "Algoritme", "description": "De Luhn-berekening, stap voor stap" },
+      "faq": { "label": "Veelgestelde vragen", "description": "" },
+      "about": { "label": "Over ons", "description": "" }
+    }
+  },
+  "footer": {
+    "groups": {
+      "product": {
+        "title": "Product",
+        "items": {
+          "verify": "Een voucher controleren",
+          "demo": "Demonstratie",
+          "algorithm": "Het Luhn-algoritme",
+          "faq": "Veelgestelde vragen"
+        }
+      },
+      "resources": {
+        "title": "Bronnen",
+        "items": {
+          "about": "Over het project",
+          "contact": "Contact",
+          "sitemap": "Sitemap"
+        }
+      },
+      "legal": {
+        "title": "Juridisch",
+        "items": {
+          "legalNotice": "Juridische vermeldingen",
+          "privacy": "Privacy"
+        }
+      }
+    },
+    "copyright": "© {year} {name}.",
+    "noDataNotice": "Geen enkel ingevoerd nummer wordt ooit verzonden, gelogd of opgeslagen."
+  },
+  "home": {
+    "meta": { "title": "Een voucher controleren" }
+  },
+  "hero": {
+    "badge": "Studentenproject — educatieve mockup, niet functioneel",
+    "titleStart": "De premium-interface van een",
+    "titleHighlight": "vouchercontroleur",
+    "description": "Een mockup gemaakt in een schoolomgeving om te laten zien hoe een tool voor het controleren van prepaid vouchers eruit zou zien. Er wordt geen enkele code echt gecontroleerd: elk hieronder getoond resultaat wordt lokaal gesimuleerd, zonder verbinding met een echte dienst.",
+    "ctaPrimary": "Bekijk de simulatie",
+    "ctaSecondary": "Uitgelichte kaarten",
+    "trust": {
+      "local": "100% lokale simulatie",
+      "noData": "Geen gegevens verzonden",
+      "cards": "6 geïllustreerde kaarten"
+    },
+    "previewLabel": "Voorbeeld van de interface",
+    "previewBadge": "Fictief"
+  },
+  "presentation": {
+    "eyebrow": "Overzicht",
+    "title": "Een interface-mockup, geen echte dienst",
+    "description": "Dit project illustreert het ontwerp van een controletool voor prepaid vouchers — zonder ooit de echte logica te implementeren.",
+    "steps": {
+      "detect": {
+        "title": "Herkenning van het voucher-type",
+        "description": "De interface zou automatisch het gekozen merk herkennen, waaronder Transcash, PCS, Paysafecard, Neosurf, Steam of Apple Gift Card."
+      },
+      "format": {
+        "title": "Formaatcontrole",
+        "description": "De ingevoerde lengte en tekenset zouden louter ter illustratie met een theoretisch sjabloon worden vergeleken."
+      },
+      "result": {
+        "title": "Gesimuleerd resultaat",
+        "description": "Achter deze pagina bestaat geen echte database: het getoonde oordeel wordt willekeurig gegenereerd, alleen om de interface te tonen."
+      }
+    },
+    "alertTitle": "Wat deze pagina niet doet",
+    "alertBody": "Geen enkele kaartcode wordt naar een server verzonden, met een database vergeleken of bij een uitgever gecontroleerd. Gebruik om het echte saldo van een kaart te kennen uitsluitend de officiële website van de uitgever — nooit een website van derden."
+  },
+  "brandsGrid": {
+    "eyebrow": "Uitgelichte kaarten",
+    "title": "6 families prepaid vouchers",
+    "description": "Deze merken dienen als voorbeeld voor de mockup. Er wordt hier geen enkel echt codeformaat weergegeven, en geen enkel merk is aan dit project verbonden."
+  },
+  "voucherBrands": {
+    "transcash": "Een oplaadbare prepaidkaart, gebruikt om online te betalen zonder bankrekening.",
+    "pcs": "Een oplaadbare prepaidkaart, verkrijgbaar bij tabakswinkels.",
+    "paysafecard": "Een prepaidcode waarmee je online kunt betalen zonder IBAN of bankkaart.",
+    "neosurf": "Een prepaidvoucher die op talrijke online platforms wordt geaccepteerd.",
+    "steam": "Een cadeaukaart om een Steam-wallet op te waarderen.",
+    "apple": "Een cadeaukaart om een Apple-ID op te waarderen."
+  },
+  "cardFormats": {
+    "transcash": { "hint": "12 cijfers", "example": "123456789123" },
+    "pcs": { "hint": "10 alfanumerieke tekens", "example": "A7218JH12X" },
+    "paysafecard": { "hint": "16 cijfers (streepjes optioneel)", "example": "1234-1234-1234-1234" },
+    "neosurf": { "hint": "10 alfanumerieke tekens", "example": "ABC1234567" },
+    "steam": { "hint": "letters, cijfers en eventueel streepjes", "example": "STEAM-5F27K-9QX3P" },
+    "apple": { "hint": "16 alfanumerieke tekens", "example": "X7K9P2M4Q8R1T5W3" }
+  },
+  "voucherValidation": {
+    "empty": "Voer een code in om te testen.",
+    "unknownType": "Onbekend vouchertype: „{type}”.",
+    "lengthExact": "{name} verwacht {count} tekens, {provided} opgegeven.",
+    "lengthRange": "{name} verwacht tussen {min} en {max} tekens, {provided} opgegeven.",
+    "charset": "De code moet bestaan uit {hint}."
+  },
+  "verifyPage": {
+    "meta": {
+      "title": "Een voucher controleren",
+      "description": "Controleformulier: type kiezen, bedrag invoeren, valuta kiezen en een duidelijk resultaat weergeven."
+    },
+    "eyebrow": "Controle",
+    "title": "Start de controle",
+    "description": "Selecteer een kaarttype, een valuta, een bedrag, een oplaadcode en een e-mailadres om snel een oordeel te krijgen.",
+    "formEyebrow": "Controleformulier",
+    "formTitle": "Vouchergegevens",
+    "couponBadge": "Voucher",
+    "couponPhotoLabel": "Foto van de voucher",
+    "cardTypeLabel": "Kaarttype",
+    "currencyLabel": "Valuta",
+    "amountLabel": "Bedrag",
+    "amountHint": "Voer een bedrag in voor de controle.",
+    "codeLabel": "Oplaadcode",
+    "codeHintDefault": "Verwacht formaat: {hint}. Voorbeeld: {example}",
+    "codeHintSuccess": "✓ Formaat correct",
+    "emailLabel": "E-mailadres",
+    "emailHint": "Contactadres gekoppeld aan de voucher.",
+    "footerNote": "Snelle gegevensverwerking om een oordeel weer te geven.",
+    "submit": "Controle starten",
+    "loadingPhases": {
+      "preparing": "Bezig met voorbereiden…",
+      "analyzing": "Gegevens worden geanalyseerd…",
+      "finalizing": "Oordeel wordt afgerond…"
+    },
+    "errors": {
+      "invalidEmail": "Voer een geldig e-mailadres in.",
+      "invalidAmount": "Voer een bedrag groter dan 0 in.",
+      "missingCode": "Voer de oplaadcode in.",
+      "invalidServerResponse": "Ongeldig JSON-antwoord van de server.",
+      "verificationFailed": "Controle mislukt.",
+      "unableToVerify": "Kon de voucher niet controleren."
+    },
+    "result": {
+      "eyebrow": "Resultaat",
+      "title": "Oordeel",
+      "responsiveBadge": "Responsive",
+      "analyzing": "Bezig met analyseren",
+      "analyzingDetail": "Het systeem bereidt het oordeel voor, een ogenblik geduld.",
+      "balanceTitle": "Saldo",
+      "balanceDetailAmount": "Het ingevoerde bedrag wordt als saldo weergegeven.",
+      "balanceDetailZero": "Het oordeel toont een nulsaldo voor deze controle.",
+      "typeLabel": "Type",
+      "currencyLabel": "Valuta",
+      "amountLabel": "Bedrag",
+      "codeLabel": "Oplaadcode",
+      "emailLabel": "E-mail",
+      "placeholder": "Vul het formulier in om een controleresultaat te krijgen."
+    }
+  },
+  "cardBrands": {
+    "visa": "Visa",
+    "mastercard": "Mastercard",
+    "amex": "American Express",
+    "discover": "Discover",
+    "jcb": "JCB",
+    "diners": "Diners Club",
+    "unionpay": "UnionPay",
+    "maestro": "Maestro",
+    "unknown": "Onbekend netwerk"
+  },
+  "demoPage": {
+    "meta": {
+      "title": "Interactieve demonstratie",
+      "description": "Analyseer de structuur van een kaartnummer live: netwerkdetectie, lengtecontrole en de Luhn-berekening cijfer voor cijfer uitgesplitst. Alles gebeurt in je browser."
+    },
+    "eyebrow": "Demonstratie",
+    "title": "Analyseer een nummer, cijfer voor cijfer",
+    "description": "Voer een testnummer in en bekijk hoe de vier controles bij elke toetsaanslag opnieuw worden geëvalueerd. De volledige berekening blijft in dit tabblad.",
+    "warningTitle": "Gebruik geen echte kaart",
+    "warningBody": "Deze tool is een educatieve demonstratie. Er wordt geen enkele bank gecontacteerd en het kan niet bevestigen dat een kaart bestaat. De hieronder voorgestelde testnummers zijn voldoende om alles te begrijpen.",
+    "infoTitle": "Waarom dit hier risicovrij is",
+    "infoBody": "Er wordt geen enkele netwerkoproep geactiveerd door het typen, en er wordt niets in de browseropslag geschreven. Je kunt dit zelf controleren: open het tabblad „Netwerk” van de ontwikkelaarstools en typ een nummer — de lijst met verzoeken blijft leeg. In productie moet een betaalformulier hoe dan ook via een PCI DSS-gecertificeerde aanbieder lopen, nooit via je eigen server.",
+    "cardForm": {
+      "numberLabel": "Te analyseren nummer",
+      "numberHint": "Spaties worden automatisch toegevoegd. Lokale analyse, bij elke toetsaanslag — er wordt geen enkel netwerkverzoek verzonden.",
+      "clear": "Wissen",
+      "digitsCount": "{count} / {max} cijfers"
+    },
+    "cardPreview": {
+      "demoLabel": "Demonstratie",
+      "testNumber": "TESTNUMMER",
+      "validStructure": "Geldige structuur",
+      "pending": "In afwachting"
+    },
+    "sampleNumbers": {
+      "title": "Openbare testnummers",
+      "description": "Gepubliceerd door de netwerken zelf voor ontwikkelomgevingen. Ze komen met geen enkele rekening overeen.",
+      "invalidExampleTitle": "Laatste cijfer gewijzigd: de Luhn-som faalt",
+      "invalidExampleLabel": "Ongeldig voorbeeld",
+      "brandDigits": "{brand} — {count} cijfers"
+    },
+    "resultPanel": {
+      "checks": {
+        "format": "Formaat",
+        "formatDetail": "{count, plural, one {# cijfer} other {# cijfers}} — verwacht: 12 tot 19",
+        "network": "Uitgevend netwerk",
+        "networkUnknown": "IIN-voorvoegsel niet herkend",
+        "networkDetected": "{brand} — voorvoegsel geïdentificeerd",
+        "networkLength": "Netwerklengte",
+        "networkLengthUnknown": "Onbekend netwerk, lengte niet controleerbaar",
+        "networkLengthDetail": "{brand} verwacht {lengths} cijfers",
+        "luhnSum": "Luhn-som",
+        "luhnSumDetail": "Totaal {sum} — rest {remainder} modulo 10"
+      },
+      "emptyTitle": "Wachten op een nummer",
+      "emptyDetail": "Het resultaat verschijnt zodra je begint te typen.",
+      "validTitle": "Consistente structuur",
+      "validDetail": "Het nummer voldoet aan het formaat, het netwerkbereik en de Luhn-som.",
+      "invalidTitle": "Inconsistente structuur",
+      "invalidDetail": "Minstens één controle is mislukt — zie de details hieronder.",
+      "disclaimer": "„Consistente structuur” betekent alleen dat de cijfers wiskundig correct zijn opgebouwd. Dit zegt niets over het bestaan van de kaart, het saldo ervan of de geldigheid ervan bij een bank.",
+      "breakdownTitle": "Uitsplitsing van de berekening",
+      "luhnValid": "Luhn geldig",
+      "luhnInvalid": "Luhn ongeldig"
+    },
+    "luhnSteps": {
+      "placeholder": "Voer een nummer in om de berekening cijfer voor cijfer te zien verlopen.",
+      "digitDoubledTitle": "Cijfer {digit} verdubbeld → {value}",
+      "digitUnchangedTitle": "Cijfer {digit} ongewijzigd",
+      "sum": "Som:",
+      "modulo": "{sum} mod 10 =",
+      "doubledLegend": "verdubbeld cijfer"
+    }
+  },
+  "cardValidation": {
+    "empty": "Voer een te controleren nummer in.",
+    "nonDigit": "Het nummer bevat niet-numerieke tekens.",
+    "tooShort": "Nummer te kort: {count, plural, one {# cijfer} other {# cijfers}} van minimaal 12.",
+    "tooLong": "Nummer te lang: {count} cijfers, maximaal 19.",
+    "unknownBrand": "Geen enkel bekend netwerk komt overeen met dit IIN-voorvoegsel.",
+    "invalidLength": "{brand} verwacht {lengths} cijfers, {count} opgegeven.",
+    "lengthsSeparator": " of ",
+    "checksum": "De Luhn-controlesom is onjuist."
+  },
+  "dashboardPage": {
+    "meta": {
+      "title": "Dashboard",
+      "description": "Statistieken, zoeken, filteren en paginering voor controles die daadwerkelijk via /verifier zijn ingediend."
+    },
+    "eyebrow": "Beheer",
+    "title": "Dashboard",
+    "description": "Elke vanaf de pagina „Controleren” ingediende controle wordt hier geregistreerd, ongeacht of het formaat geldig is.",
+    "logout": "Afmelden",
+    "stats": {
+      "shown": "Weergegeven controles",
+      "shownHint": "{count} in totaal",
+      "plausible": "„Aannemelijke” oordelen",
+      "plausibleHintPercent": "{percent}% van het huidige filter",
+      "plausibleHintEmpty": "—",
+      "totalAmount": "Totaalbedrag",
+      "totalAmountHint": "Som van de tijdens de controles ingevoerde bedragen",
+      "trackedTypes": "Gevolgde kaarttypes",
+      "trackedTypesHint": "Transcash, PCS, Paysafecard, Neosurf, Steam, Apple"
+    },
+    "charts": {
+      "byBrandTitle": "Controles per kaarttype",
+      "byBrandAriaLabel": "Aantal controles per kaarttype",
+      "byDayTitle": "Controles over {days} dagen",
+      "byDayAriaLabel": "Aantal controles per dag, over de afgelopen {days} dagen"
+    },
+    "filters": {
+      "searchLabel": "Zoeken",
+      "searchPlaceholder": "Code of kaartnaam…",
+      "refresh": "Vernieuwen",
+      "typeFilterLabel": "Filteren op kaarttype",
+      "allTypes": "Alle"
+    },
+    "table": {
+      "cardColumn": "Kaart",
+      "codeColumn": "Oplaadcode",
+      "statusColumn": "Status",
+      "amountColumn": "Bedrag",
+      "dateColumn": "Datum",
+      "actionColumn": "Actie",
+      "deleteLabel": "Item {brand} {code} verwijderen",
+      "empty": "Geen enkel item komt overeen met deze filters.",
+      "status": {
+        "plausible": "Aannemelijk (gesimuleerd)",
+        "suspect": "Verdacht (gesimuleerd)",
+        "invalid": "Ongeldig formaat"
+      }
+    },
+    "login": {
+      "title": "Beheerderstoegang",
+      "description": "Voer het wachtwoord in om toegang te krijgen tot het dashboard.",
+      "passwordLabel": "Wachtwoord",
+      "submit": "Inloggen",
+      "connecting": "Bezig met verbinden…",
+      "accessDenied": "Toegang geweigerd.",
+      "serverUnreachable": "Kon de server niet bereiken. Probeer het opnieuw.",
+      "footnote": "Beperkte toegang: dit paneel geeft toegang tot de controles die daadwerkelijk door bezoekers van de site zijn ingediend."
+    }
+  },
+  "algorithmPage": {
+    "meta": {
+      "title": "Het Luhn-algoritme uitgelegd",
+      "description": "Hoe het Luhn-algoritme werkt: van rechts naar links doorlopen, om de andere cijfer verdubbelen, modulo-9-reductie en modulo-10-test. Met becommentarieerde TypeScript-code en de IIN-voorvoegseltabel."
+    },
+    "eyebrow": "Documentatie",
+    "title": "Het Luhn-algoritme, in detail",
+    "description": "In 1960 gepatenteerd door Hans Peter Luhn, een ingenieur bij IBM, wordt deze berekening vandaag gebruikt in bankkaartnummers, telefoon-IMEI's en verschillende nationale identificatienummers.",
+    "principle": {
+      "title": "Waar een controlesom voor dient",
+      "p1": "Een controlesom voegt redundantie toe aan een reeks cijfers om overdrachts- of invoerfouten te detecteren. Het laatste cijfer van een kaartnummer, het {key} genoemd, wordt niet vrij gekozen: het wordt berekend op basis van alle voorgaande cijfers.",
+      "p1Key": "controlecijfer",
+      "p2Before": "Luhn detecteert",
+      "p2Percent": "100%",
+      "p2After": "van de fouten op een enkel cijfer, en vrijwel alle verwisselingen van twee aangrenzende cijfers — de twee meest voorkomende tikfouten. De bekende beperking: het onderscheidt de verwisseling niet"
+    },
+    "steps": {
+      "title": "De berekening, stap voor stap",
+      "items": {
+        "step1": "Schrijf het nummer op en lees het van rechts naar links, beginnend bij het controlecijfer.",
+        "step2": "Verdubbel om de andere cijfer, beginnend bij het voorlaatste cijfer (het controlecijfer wordt nooit verdubbeld).",
+        "step3": "Als een verdubbeling groter is dan 9, trek er dan 9 van af — wat neerkomt op het optellen van de twee cijfers ervan.",
+        "step4": "Tel alle verkregen waarden op.",
+        "step5": "Als de som deelbaar is door 10, is het nummer structureel consistent."
+      }
+    },
+    "example": {
+      "title": "Voorbeeld met 8 cijfers",
+      "intro": "Neem {number}. De bovenste rij geeft het oorspronkelijke cijfer, de onderste de waarde ervan na verwerking. Het laatste {lastDigit} is het controlecijfer: het wordt nooit verdubbeld.",
+      "tableCaption": "Uitsplitsing van de Luhn-berekening voor het nummer 4539 1489",
+      "summary": "Som: 8 + 5 + 6 + 9 + 2 + 4 + 7 + 9 = {total}. Omdat {total} modulo 10 gelijk is aan 0, is de structuur consistent. Verander één enkel cijfer en de rest is niet langer nul: dat is precies het nut van een controlesom. De blauwe vakjes markeren de verdubbelde cijfers."
+    },
+    "implementation": {
+      "title": "TypeScript-implementatie",
+      "description": "Een pure functie, zonder afhankelijkheden, van ongeveer vijftien regels. De volledige versie van de site geeft bovendien het detail van elke stap terug, voor de educatieve weergave.",
+      "sourceNote": "Volledige, becommentarieerde broncode:"
+    },
+    "prefixes": {
+      "title": "IIN-voorvoegsels en lengtes per netwerk",
+      "description": "Luhn zegt niets over het uitgevende netwerk. Dat wordt afgeleid uit de eerste cijfers, het IIN ({term}), gestandaardiseerd door ISO/IEC 7812.",
+      "term": "Issuer Identification Number",
+      "networkColumn": "Netwerk",
+      "lengthsColumn": "Lengtes",
+      "cvcColumn": "Beveiligingscode",
+      "cvcDigits": "{count} cijfers"
+    },
+    "limits": {
+      "title": "Wat Luhn niet doet",
+      "alertBody": "Een door Luhn gevalideerd nummer is geen geldig nummer. Het is enkel correct opgebouwd. Het algoritme negeert het bestaan van de rekening, het saldo ervan, de vervaldatum en de status ervan. Cijferreeksen genereren die de test doorstaan is triviaal — precies daarom vertrouwen betaalnetwerken op een online bankautorisatie, nooit op een controlesom.",
+      "conclusion": "Het legitieme gebruik van Luhn aan de clientzijde komt dus neer op één punt: een onnodige netwerkheen-en-weer vermijden wanneer de invoer duidelijk een tikfout bevat."
+    },
+    "ctaTry": "Uitproberen in de demonstratie",
+    "ctaFaq": "Veelgestelde vragen"
+  },
+  "aboutPage": {
+    "meta": {
+      "title": "Over het project",
+      "description": "Card Verify is een open-source educatief project, gebouwd met Next.js 15, TypeScript en Tailwind CSS om het Luhn-algoritme en goede praktijken voor betaalformulieren te illustreren."
+    },
+    "eyebrow": "Het project",
+    "title": "Een site om te leren, niet om te controleren",
+    "description": "Card Verify bestaat om een berekening zichtbaar te maken die de meeste betaalformulieren stilzwijgend uitvoeren.",
+    "why": {
+      "title": "Waarom dit project",
+      "p1": "Wanneer een formulier „ongeldig kaartnummer” toont nog voordat de bank is gecontacteerd, past het het Luhn-algoritme toe. Deze controle is overal te vinden en wordt toch zelden uitgelegd: vaak blijft alleen hangen dat het „de kaart controleert”, wat onjuist is en tot verwarring leidt.",
+      "p2": "Deze site scheidt daarom duidelijk drie niveaus: de wiskundige consistentie van het nummer, de identificatie van het uitgevende netwerk, en de bankautorisatie — die juist niets te zoeken heeft in een browser."
+    },
+    "stack": {
+      "title": "Technische keuzes",
+      "items": {
+        "nextjs": { "name": "Next.js 15", "detail": "App Router, standaard servercomponenten, metadata en sitemap gegenereerd door het framework." },
+        "typescript": { "name": "TypeScript", "detail": "Strikte modus, expliciete types voor alle bedrijfslogica, geen enkele `any`-assertie." },
+        "tailwind": { "name": "Tailwind CSS v4", "detail": "Thema gedeclareerd in CSS, geen enkel stylesheet buiten het utility-systeem." },
+        "zeroDep": { "name": "Geen bedrijfsafhankelijkheden", "detail": "Het algoritme, de opmaak en de netwerkdetectie passen in drie zelfstandige bestanden." }
+      }
+    },
+    "scope": {
+      "title": "Bewust beperkte reikwijdte",
+      "alertBody": "Card Verify is geen bankverificatiedienst en zal dat ook nooit worden. Het raadpleegt geen enkel betaalnetwerk, legt geen enkele BIN-database bloot en bewaart geen enkele invoer. Elk gebruik dat erop gericht is echte nummers te testen, valt buiten de reikwijdte van het project.",
+      "p1": "In productie moet een betaalformulier de invoer toevertrouwen aan een {pciDss}-gecertificeerde aanbieder, via een gehost veld of een token. Je applicatie zou een kaartnummer nooit in platte tekst mogen zien, laat staan het loggen.",
+      "p2": "De Luhn-controle aan de clientzijde behoudt niettemin zijn nut: direct een tikfout aantonen, zonder netwerk en zonder wachttijd."
+    }
+  },
+  "contactPage": {
+    "meta": {
+      "title": "Contact",
+      "description": "Een vraag over het Luhn-algoritme, een correctie om voor te stellen of een educatieve suggestie? Schrijf naar het Card Verify-team."
+    },
+    "eyebrow": "Contact",
+    "title": "Schrijf ons",
+    "description": "Correcties, technische verduidelijkingen, educatieve suggesties: elke opmerking is welkom.",
+    "mockNotice": "Dit formulier is een mockup: het verzendt niets en bewaart niets. Koppel het aan je eigen verzenddienst (API-route, transactionele provider) voordat je live gaat.",
+    "nameLabel": "Naam",
+    "namePlaceholder": "Jan Janssen",
+    "emailLabel": "E-mailadres",
+    "emailPlaceholder": "jan@voorbeeld.nl",
+    "subjectLabel": "Onderwerp",
+    "subjectOptions": {
+      "question": "Vraag over het algoritme",
+      "correction": "Een fout melden",
+      "suggestion": "Educatieve suggestie",
+      "other": "Anders"
+    },
+    "messageLabel": "Bericht",
+    "messagePlaceholder": "Je bericht…",
+    "messageHint": "Vermeld nooit een echt kaartnummer in een bericht.",
+    "submit": "Verzenden (uitgeschakeld in de demo)"
+  },
+  "faqPage": {
+    "meta": {
+      "title": "Veelgestelde vragen",
+      "description": "Wat Card Verify werkelijk controleert, waar je invoer naartoe gaat, waarom een door Luhn gevalideerd nummer toch door een bank kan worden geweigerd, en hoe je de code kunt hergebruiken."
+    },
+    "eyebrow": "Hulp",
+    "title": "Veelgestelde vragen",
+    "description": "Antwoorden op de meest voorkomende misverstanden rond de validatie van een kaartnummer.",
+    "entries": {
+      "real": {
+        "question": "Controleert Card Verify of een kaart echt of gevuld is?",
+        "answer": "Nee, en dat onderscheid is essentieel. Het Luhn-algoritme test alleen de wiskundige consistentie van een cijferreeks. Het negeert volledig het bestaan van de rekening, het saldo, de vervaldatum of de status ervan. Alleen een bank kan, via haar autorisatienetwerk, deze vragen beantwoorden."
+      },
+      "dataSent": {
+        "question": "Wordt mijn invoer ergens naartoe verzonden?",
+        "answer": "Nee. De volledige controle wordt in JavaScript in je browser uitgevoerd. Geen enkel nummer wordt naar een server verzonden, gelogd of lokaal opgeslagen. Je kunt dit zelf nagaan door het tabblad „Netwerk” van de ontwikkelaarstools te openen: tijdens het typen wordt geen enkel verzoek verzonden."
+      },
+      "realNumber": {
+        "question": "Moet ik een echt kaartnummer invoeren?",
+        "answer": "Zeker niet. Deze site is een educatieve demonstratie: gebruik de openbare testnummers die op de demonstratiepagina worden aangeboden. Ze worden door de netwerken zelf gepubliceerd voor ontwikkelomgevingen en komen met geen enkele rekening overeen."
+      },
+      "purpose": {
+        "question": "Waar dient het Luhn-algoritme concreet voor?",
+        "answer": "Om invoerfouten te detecteren vóór elke netwerkoproep. Het herkent alle fouten op een enkel cijfer en de meeste verwisselingen van twee aangrenzende cijfers. Een formulier dat het implementeert, vermijdt een nutteloos verzoek en toont de fout onmiddellijk. Het wordt ook gebruikt bij IMEI-nummers, nationale identificatienummers en bepaalde barcodes."
+      },
+      "networkDetection": {
+        "question": "Waarom wordt het netwerk al gedetecteerd vóór het einde van de invoer?",
+        "answer": "Omdat de eerste cijfers, IIN of BIN (Issuer Identification Number) genoemd, de uitgever aanduiden. Een beginnende 4 wijst op Visa, het bereik 51-55 en 2221-2720 op Mastercard, 34 en 37 op American Express. Deze voorvoegseltabel is openbaar en gestandaardiseerd door ISO/IEC 7812."
+      },
+      "refused": {
+        "question": "Kan een door Luhn gevalideerd nummer toch door de bank worden geweigerd?",
+        "answer": "Voortdurend. Luhn is een eerstelijnsfilter: het elimineert inconsistente invoer. Een nummer kan deze test doorstaan en toch een verlopen, geblokkeerde, gelimiteerde of simpelweg nooit uitgegeven kaart aanduiden. Het omgekeerde geldt niet: een nummer dat de Luhn-test niet doorstaat, is zeker fout."
+      },
+      "reuse": {
+        "question": "Mag ik deze code in mijn eigen project hergebruiken?",
+        "answer": "Ja. De functies in src/lib/luhn.ts en src/lib/validate-card.ts zijn zelfstandig, zonder externe afhankelijkheden, en getypeerd. Onthoud echter dat een betaalformulier in productie via een PCI DSS-gecertificeerde aanbieder moet lopen: je applicatie zou een kaartnummer nooit in platte tekst mogen verwerken."
+      },
+      "noJs": {
+        "question": "Werkt de site zonder JavaScript?",
+        "answer": "De educatieve inhoud — pagina's, uitleg, veelgestelde vragen — wordt server-side gerenderd en blijft volledig leesbaar. Alleen het interactieve formulier van de demonstratiepagina vereist JavaScript, aangezien de berekening bewust aan de clientzijde gebeurt."
+      }
+    },
+    "ctaTitle": "Nog een onbeantwoorde vraag?",
+    "ctaDescription": "Het project is educatief en staat open voor suggesties. Schrijf ons, of lees eerst de volledige uitleg van het algoritme.",
+    "ctaContact": "Schrijf ons",
+    "ctaDocs": "Documentatie lezen"
+  },
+  "legalPage": {
+    "meta": {
+      "title": "Juridische vermeldingen",
+      "description": "Uitgever, hosting, intellectueel eigendom en aansprakelijkheidsbeperking van de Card Verify-demonstratiesite."
+    },
+    "title": "Juridische vermeldingen",
+    "lastUpdate": "Laatst bijgewerkt: aan te vullen bij publicatie van {name}.",
+    "sections": {
+      "publisher": {
+        "title": "Uitgever van de site",
+        "body": "Deze site is een educatief demonstratieproject dat niet-commercieel wordt gepubliceerd. Vervang deze paragraaf door de bedrijfsnaam, de rechtsvorm, het adres van de hoofdzetel, het registratienummer en de naam van de verantwoordelijke uitgever vóór elke echte publicatie."
+      },
+      "hosting": {
+        "title": "Hosting",
+        "body": "Vermeld hier de naam, het postadres en het telefoonnummer van je hostingprovider, in overeenstemming met de toepasselijke lokale regelgeving over hostingvermelding."
+      },
+      "purpose": {
+        "title": "Doel van de dienst",
+        "body": "Card Verify illustreert de werking van het Luhn-algoritme. Het is geen bankverificatiedienst, raadpleegt geen enkele financiële instelling en kan op geen enkele manier het bestaan, de geldigheid of de solvabiliteit van een betaalmiddel bevestigen."
+      },
+      "liability": {
+        "title": "Aansprakelijkheidsbeperking",
+        "body": "De inhoud wordt louter informatief verstrekt, zonder garantie van juistheid of volledigheid. De uitgever kan niet aansprakelijk worden gesteld voor oneigenlijk gebruik van de demonstratie, noch voor de gevolgen van een beslissing die uitsluitend op de getoonde resultaten is gebaseerd."
+      },
+      "ip": {
+        "title": "Intellectueel eigendom",
+        "body": "De genoemde merken en logo's van de betaalnetwerken behoren toe aan hun respectieve eigenaars en worden uitsluitend ter beschrijving vermeld. Er wordt geen enkel partnerschap of affiliatie gesuggereerd."
+      }
+    }
+  },
+  "privacyPage": {
+    "meta": {
+      "title": "Privacy",
+      "description": "Card Verify verzamelt geen persoonsgegevens: ingevoerde nummers worden lokaal in de browser geanalyseerd en nooit verzonden, gelogd of opgeslagen."
+    },
+    "title": "Privacybeleid",
+    "intro": "Het principe is eenvoudig: wat niet wordt verzameld, kan niet lekken.",
+    "verifyAlertTitle": "In dertig seconden controleerbaar",
+    "verifyAlertBody": "Open de ontwikkelaarstools van je browser, tabblad „Netwerk”, en voer dan een nummer in op de demonstratiepagina. Er verschijnt geen enkel verzoek.",
+    "sections": {
+      "noCollection": {
+        "title": "Geen verzameling van nummers",
+        "body": "Nummers die in de demonstratie worden ingevoerd, worden uitsluitend verwerkt door JavaScript-code die in je browser wordt uitgevoerd. Ze worden nooit naar een server verzonden, verschijnen in geen enkel logboek en worden niet geschreven naar cookies, lokale opslag of sessieopslag."
+      },
+      "cookies": {
+        "title": "Cookies",
+        "body": "De site plaatst alleen een technische cookie om je taalvoorkeur te onthouden. Er is geen enkele advertentietracker, geen enkele tool voor publieksmeting van derden geïntegreerd."
+      },
+      "logs": {
+        "title": "Technische logboeken",
+        "body": "De hostingprovider kan toegangslogboeken bijhouden (IP-adres, opgevraagde pagina, tijdstempel) om beveiligings- en exploitatieredenen. Deze logboeken bevatten nooit de inhoud van het formulier, aangezien die nooit de browser verlaat."
+      },
+      "fonts": {
+        "title": "Lettertypen en externe bronnen",
+        "body": "Het lettertype Inter wordt geladen via next/font, dat het zelf host op het moment van compileren. Tijdens je bezoek wordt daarom geen enkel verzoek naar een dienst van derden gestuurd."
+      },
+      "rights": {
+        "title": "Jouw rechten",
+        "body": "Aangezien de site zelf geen persoonsgegevens verzamelt, is er geen verwerking waarop een recht op inzage, rectificatie of verwijdering kan worden uitgeoefend. Voor elke vraag staat de contactpagina tot je beschikking."
+      }
+    }
+  },
+  "notFoundPage": {
+    "meta": { "title": "Pagina niet gevonden" },
+    "title": "Deze pagina bestaat niet",
+    "description": "De link is misschien verouderd, of het adres bevat een tikfout — het Luhn-algoritme helpt helaas niet bij URL's.",
+    "ctaHome": "Terug naar start",
+    "ctaDemo": "Naar de demonstratie"
+  },
+  "errorPage": {
+    "title": "Er is een fout opgetreden",
+    "description": "Het weergeven van deze pagina is mislukt. Opnieuw proberen helpt meestal; als het probleem aanhoudt, ga dan terug naar start.",
+    "reference": "Referentie: {digest}",
+    "retry": "Opnieuw proberen",
+    "ctaHome": "Terug naar start"
+  },
+  "loadingPage": {
+    "label": "Bezig met laden…"
+  }
+}

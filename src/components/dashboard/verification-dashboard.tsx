@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { BarChart, type BarDatum } from "@/components/ui/bar-chart";
 import { Button } from "@/components/ui/button";
 import { CardSelector } from "@/components/ui/card-selector";
@@ -41,7 +42,11 @@ function matchesQuery(record: VerificationRecord, query: string): boolean {
   );
 }
 
-function buildDailyCounts(records: VerificationRecord[], referenceDateISO: string): BarDatum[] {
+function buildDailyCounts(
+  records: VerificationRecord[],
+  referenceDateISO: string,
+  locale: string,
+): BarDatum[] {
   const reference = new Date(referenceDateISO);
   reference.setUTCHours(0, 0, 0, 0);
 
@@ -50,7 +55,7 @@ function buildDailyCounts(records: VerificationRecord[], referenceDateISO: strin
     const day = new Date(reference.getTime() - i * DAY_MS);
     buckets.push({
       key: day.toISOString().slice(0, 10),
-      label: day.toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit" }),
+      label: day.toLocaleDateString(locale, { day: "2-digit", month: "2-digit" }),
       value: 0,
       color: TREND_COLOR,
     });
@@ -73,6 +78,8 @@ export function VerificationDashboard({
   referenceDateISO: string;
 }) {
   const router = useRouter();
+  const t = useTranslations("dashboardPage");
+  const locale = useLocale();
   const [records, setRecords] = useState<VerificationRecord[]>(initialRecords);
   const [typeFilter, setTypeFilter] = useState("all");
   const [query, setQuery] = useState("");
@@ -116,8 +123,8 @@ export function VerificationDashboard({
   );
 
   const byDay = useMemo(
-    () => buildDailyCounts(filtered, referenceDateISO),
-    [filtered, referenceDateISO],
+    () => buildDailyCounts(filtered, referenceDateISO, locale),
+    [filtered, referenceDateISO, locale],
   );
 
   const plausibleCount = filtered.filter((record) => record.status === "plausible").length;
@@ -142,7 +149,7 @@ export function VerificationDashboard({
   }
 
   const typeOptions = [
-    { id: "all", label: "Toutes", gradient: "from-slate-500 to-slate-700" },
+    { id: "all", label: t("filters.allTypes"), gradient: "from-slate-500 to-slate-700" },
     ...voucherBrands.map((brand) => ({
       id: brand.id,
       label: brand.name,
@@ -156,35 +163,37 @@ export function VerificationDashboard({
       <div className="flex justify-end">
         <Button type="button" variant="outline" size="sm" onClick={handleLogout} disabled={loggingOut}>
           <Icon name="close" size={16} />
-          Se déconnecter
+          {t("logout")}
         </Button>
       </div>
 
       {/* Statistiques */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatTile
-          label="Vérifications affichées"
+          label={t("stats.shown")}
           value={String(filtered.length)}
-          hint={`${records.length} au total`}
+          hint={t("stats.shownHint", { count: records.length })}
         />
         <StatTile
-          label="Verdicts « plausible »"
+          label={t("stats.plausible")}
           value={String(plausibleCount)}
           hint={
             filtered.length
-              ? `${Math.round((plausibleCount / filtered.length) * 100)} % du filtre actuel`
-              : "—"
+              ? t("stats.plausibleHintPercent", {
+                  percent: Math.round((plausibleCount / filtered.length) * 100),
+                })
+              : t("stats.plausibleHintEmpty")
           }
         />
         <StatTile
-          label="Montant cumulé"
+          label={t("stats.totalAmount")}
           value={`${totalAmount} €`}
-          hint="Somme des montants saisis lors des vérifications"
+          hint={t("stats.totalAmountHint")}
         />
         <StatTile
-          label="Types de cartes suivis"
+          label={t("stats.trackedTypes")}
           value={String(voucherBrands.length)}
-          hint="Transcash, PCS, Paysafecard, Neosurf, Steam, Apple"
+          hint={t("stats.trackedTypesHint")}
         />
       </div>
 
@@ -192,12 +201,12 @@ export function VerificationDashboard({
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="glass rounded-2xl p-6">
           <h3 className="text-sm font-semibold text-ink-2">
-            Vérifications par type de carte
+            {t("charts.byBrandTitle")}
           </h3>
           <div className="mt-6">
             <BarChart
               data={byBrand}
-              ariaLabel="Nombre de vérifications par type de carte"
+              ariaLabel={t("charts.byBrandAriaLabel")}
               directLabels
             />
           </div>
@@ -205,13 +214,13 @@ export function VerificationDashboard({
 
         <div className="glass rounded-2xl p-6">
           <h3 className="text-sm font-semibold text-ink-2">
-            Vérifications sur {TREND_DAYS} jours
+            {t("charts.byDayTitle", { days: TREND_DAYS })}
           </h3>
           <div className="mt-6 overflow-x-auto">
             <div className="min-w-[560px]">
               <BarChart
                 data={byDay}
-                ariaLabel={`Nombre de vérifications par jour, sur les ${TREND_DAYS} derniers jours`}
+                ariaLabel={t("charts.byDayAriaLabel", { days: TREND_DAYS })}
               />
             </div>
           </div>
@@ -223,7 +232,7 @@ export function VerificationDashboard({
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="w-full max-w-sm">
             <label htmlFor="dashboard-search" className="block text-sm font-medium text-ink-2">
-              Recherche
+              {t("filters.searchLabel")}
             </label>
             <div className="relative mt-2">
               <Icon
@@ -236,19 +245,19 @@ export function VerificationDashboard({
                 type="text"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Code ou nom de carte…"
+                placeholder={t("filters.searchPlaceholder")}
                 className="glass w-full rounded-xl py-2.5 pl-9 pr-3 text-sm text-ink-1 placeholder:text-ink-4 transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-app"
               />
             </div>
           </div>
 
           <Button type="button" variant="outline" size="sm" onClick={() => router.refresh()}>
-            Actualiser
+            {t("filters.refresh")}
           </Button>
         </div>
 
         <CardSelector
-          label="Filtrer par type de carte"
+          label={t("filters.typeFilterLabel")}
           options={typeOptions}
           value={typeFilter}
           onChange={setTypeFilter}

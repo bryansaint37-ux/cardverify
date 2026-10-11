@@ -1,23 +1,25 @@
 import type { Metadata } from "next";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Alert } from "@/components/ui/alert";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Icon } from "@/components/ui/icon";
+import type { Locale } from "@/i18n/locales";
 import { CARD_BRANDS } from "@/lib/card-brands";
 import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = buildMetadata({
-  title: "L'algorithme de Luhn expliqué",
-  description:
-    "Comment fonctionne l'algorithme de Luhn : parcours à rebours, doublement un chiffre sur deux, réduction modulo 9 et test modulo 10. Avec le code TypeScript commenté et la table des préfixes IIN.",
-  path: "/algorithme",
-  keywords: ["Luhn", "modulo 10", "ISO 7812", "checksum", "IIN", "BIN"],
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = (await getLocale()) as Locale;
+  const t = await getTranslations("algorithmPage");
 
-const jsonLd = breadcrumbJsonLd([
-  { name: "Accueil", path: "/" },
-  { name: "Algorithme", path: "/algorithme" },
-]);
+  return buildMetadata({
+    title: t("meta.title"),
+    description: t("meta.description"),
+    path: "/algorithme",
+    keywords: ["Luhn", "modulo 10", "ISO 7812", "checksum", "IIN", "BIN"],
+    locale,
+  });
+}
 
 const codeSample = `export function luhnCheck(input: string): boolean {
   const digits = input.replace(/\\D+/g, "");
@@ -56,7 +58,17 @@ const walkthrough = [
   { digit: "9", doubled: false, value: 9 }, // clé de contrôle
 ];
 
-export default function AlgorithmePage() {
+export default async function AlgorithmePage() {
+  const t = await getTranslations("algorithmPage");
+  const tNav = await getTranslations("nav");
+  const tCommon = await getTranslations("common");
+  const tCardBrands = await getTranslations("cardBrands");
+
+  const jsonLd = breadcrumbJsonLd([
+    { name: tCommon("home"), path: "/" },
+    { name: tNav("items.algorithm.label"), path: "/algorithme" },
+  ]);
+
   return (
     <>
       <script
@@ -67,15 +79,13 @@ export default function AlgorithmePage() {
       <Container size="md" className="py-14 sm:py-20">
         <header className="max-w-2xl">
           <p className="text-sm font-semibold uppercase tracking-widest text-accent">
-            Documentation
+            {t("eyebrow")}
           </p>
           <h1 className="mt-3 text-balance text-4xl font-bold tracking-tight text-ink-1 sm:text-5xl">
-            L&apos;algorithme de Luhn, en détail
+            {t("title")}
           </h1>
           <p className="mt-4 text-pretty text-lg leading-relaxed text-ink-3">
-            Breveté en 1960 par Hans Peter Luhn, ingénieur chez IBM, ce calcul
-            équipe aujourd&apos;hui les numéros de carte bancaire, les IMEI de
-            téléphones et plusieurs identifiants nationaux.
+            {t("description")}
           </p>
         </header>
 
@@ -83,23 +93,17 @@ export default function AlgorithmePage() {
           {/* --- Ce que ça fait --- */}
           <section id="principe">
             <h2 className="text-2xl font-bold tracking-tight text-ink-1">
-              À quoi sert une somme de contrôle
+              {t("principle.title")}
             </h2>
             <div className="mt-4 space-y-4 leading-relaxed text-ink-3">
               <p>
-                Une somme de contrôle ajoute de la redondance à une suite de
-                chiffres pour détecter les erreurs de transmission ou de saisie.
-                Le dernier chiffre d&apos;un numéro de carte, appelé{" "}
-                <strong className="text-ink-2">clé de contrôle</strong>,
-                n&apos;est pas choisi librement : il est calculé à partir de tous
-                les précédents.
+                {t("principle.p1", { key: t("principle.p1Key") })}
               </p>
               <p>
-                Luhn détecte <strong className="text-ink-2">100 %</strong>{" "}
-                des erreurs portant sur un chiffre unique, et la quasi-totalité
-                des inversions de deux chiffres adjacents — les deux fautes de
-                frappe les plus courantes. Sa limite connue : il ne distingue pas
-                l&apos;inversion <code className="text-accent">09</code> ↔{" "}
+                {t("principle.p2Before")}{" "}
+                <strong className="text-ink-2">{t("principle.p2Percent")}</strong>{" "}
+                {t("principle.p2After")}{" "}
+                <code className="text-accent">09</code> ↔{" "}
                 <code className="text-accent">90</code>.
               </p>
             </div>
@@ -108,16 +112,16 @@ export default function AlgorithmePage() {
           {/* --- Les étapes --- */}
           <section id="etapes">
             <h2 className="text-2xl font-bold tracking-tight text-ink-1">
-              Le calcul, étape par étape
+              {t("steps.title")}
             </h2>
 
             <ol className="mt-6 space-y-4">
               {[
-                "Écrire le numéro et le lire de droite à gauche, en partant de la clé de contrôle.",
-                "Doubler un chiffre sur deux, en commençant par l'avant-dernier (la clé n'est jamais doublée).",
-                "Si un doublement dépasse 9, lui retrancher 9 — ce qui revient à additionner ses deux chiffres.",
-                "Additionner toutes les valeurs obtenues.",
-                "Si la somme est divisible par 10, le numéro est structurellement cohérent.",
+                t("steps.items.step1"),
+                t("steps.items.step2"),
+                t("steps.items.step3"),
+                t("steps.items.step4"),
+                t("steps.items.step5"),
               ].map((text, index) => (
                 <li key={text} className="flex gap-4">
                   <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-info-border bg-info-bg text-sm font-semibold text-accent">
@@ -132,20 +136,15 @@ export default function AlgorithmePage() {
           {/* --- Exemple chiffré --- */}
           <section id="exemple">
             <h2 className="text-2xl font-bold tracking-tight text-ink-1">
-              Exemple sur 8 chiffres
+              {t("example.title")}
             </h2>
             <p className="mt-4 leading-relaxed text-ink-3">
-              Prenons <code className="font-mono text-accent">4539 1489</code>.
-              La ligne du haut donne le chiffre d&apos;origine, celle du bas sa
-              valeur après traitement. Le dernier <code className="font-mono text-accent">9</code>{" "}
-              est la clé de contrôle : elle n&apos;est jamais doublée.
+              {t("example.intro", { number: "4539 1489", lastDigit: "9" })}
             </p>
 
             <div className="mt-6 overflow-x-auto">
               <table className="w-full min-w-md border-collapse text-center font-mono text-sm">
-                <caption className="sr-only">
-                  Décomposition du calcul de Luhn pour le numéro 4539 1489
-                </caption>
+                <caption className="sr-only">{t("example.tableCaption")}</caption>
                 <thead>
                   <tr>
                     {walkthrough.map((cell, index) => (
@@ -179,23 +178,17 @@ export default function AlgorithmePage() {
             </div>
 
             <p className="mt-5 leading-relaxed text-ink-3">
-              Somme : 8 + 5 + 6 + 9 + 2 + 4 + 7 + 9 ={" "}
-              <strong className="text-ink-1">50</strong>. Comme 50 modulo 10
-              vaut 0, la structure est cohérente. Changez un seul chiffre et le
-              reste cesse d&apos;être nul : c&apos;est tout l&apos;intérêt de la
-              somme de contrôle. Les cases bleues marquent les chiffres doublés.
+              {t("example.summary", { total: 50 })}
             </p>
           </section>
 
           {/* --- Code --- */}
           <section id="implementation">
             <h2 className="text-2xl font-bold tracking-tight text-ink-1">
-              Implémentation TypeScript
+              {t("implementation.title")}
             </h2>
             <p className="mt-4 leading-relaxed text-ink-3">
-              Une fonction pure, sans dépendance, en une quinzaine de lignes. La
-              version complète du site retourne en plus le détail de chaque
-              étape, pour l&apos;affichage pédagogique.
+              {t("implementation.description")}
             </p>
 
             <pre className="mt-6 overflow-x-auto rounded-2xl border border-line bg-input p-5 text-sm leading-relaxed">
@@ -203,7 +196,7 @@ export default function AlgorithmePage() {
             </pre>
 
             <p className="mt-4 text-sm text-ink-4">
-              Source complète et commentée :{" "}
+              {t("implementation.sourceNote")}{" "}
               <code className="text-ink-3">src/lib/luhn.ts</code>
             </p>
           </section>
@@ -211,12 +204,10 @@ export default function AlgorithmePage() {
           {/* --- Table IIN --- */}
           <section id="prefixes">
             <h2 className="text-2xl font-bold tracking-tight text-ink-1">
-              Préfixes IIN et longueurs par réseau
+              {t("prefixes.title")}
             </h2>
             <p className="mt-4 leading-relaxed text-ink-3">
-              Luhn ne dit rien du réseau émetteur. Celui-ci se déduit des
-              premiers chiffres, l&apos;IIN (<em>Issuer Identification Number</em>
-              ), normalisé par l&apos;ISO/IEC 7812.
+              {t("prefixes.description", { term: t("prefixes.term") })}
             </p>
 
             <div className="mt-6 overflow-x-auto rounded-2xl border border-line">
@@ -224,13 +215,13 @@ export default function AlgorithmePage() {
                 <thead className="bg-input">
                   <tr>
                     <th scope="col" className="px-5 py-3 font-semibold text-ink-2">
-                      Réseau
+                      {t("prefixes.networkColumn")}
                     </th>
                     <th scope="col" className="px-5 py-3 font-semibold text-ink-2">
-                      Longueurs
+                      {t("prefixes.lengthsColumn")}
                     </th>
                     <th scope="col" className="px-5 py-3 font-semibold text-ink-2">
-                      Cryptogramme
+                      {t("prefixes.cvcColumn")}
                     </th>
                   </tr>
                 </thead>
@@ -238,13 +229,13 @@ export default function AlgorithmePage() {
                   {CARD_BRANDS.map((brand) => (
                     <tr key={brand.id}>
                       <td className="px-5 py-3 font-medium text-ink-2">
-                        {brand.label}
+                        {tCardBrands(brand.id)}
                       </td>
                       <td className="px-5 py-3 font-mono text-ink-3">
                         {brand.lengths.join(", ")}
                       </td>
                       <td className="px-5 py-3 font-mono text-ink-3">
-                        {brand.cvcLength} chiffres
+                        {t("prefixes.cvcDigits", { count: brand.cvcLength })}
                       </td>
                     </tr>
                   ))}
@@ -256,34 +247,26 @@ export default function AlgorithmePage() {
           {/* --- Limites --- */}
           <section id="limites">
             <h2 className="text-2xl font-bold tracking-tight text-ink-1">
-              Ce que Luhn ne fait pas
+              {t("limits.title")}
             </h2>
 
             <Alert tone="warning" className="mt-6">
-              Un numéro validé par Luhn n&apos;est pas un numéro valide. Il est
-              simplement <em>bien formé</em>. L&apos;algorithme ignore
-              l&apos;existence du compte, son solde, sa date d&apos;expiration et
-              son statut. Générer des suites de chiffres qui passent le test est
-              trivial — c&apos;est précisément pourquoi les réseaux de paiement
-              s&apos;appuient sur une autorisation bancaire en ligne, jamais sur
-              une somme de contrôle.
+              {t("limits.alertBody")}
             </Alert>
 
             <p className="mt-6 leading-relaxed text-ink-3">
-              L&apos;usage légitime de Luhn côté client se résume donc à un point :
-              éviter un aller-retour réseau inutile quand la saisie comporte
-              manifestement une faute de frappe.
+              {t("limits.conclusion")}
             </p>
           </section>
         </div>
 
         <div className="mt-16 flex flex-col gap-3 border-t border-line pt-10 sm:flex-row">
           <ButtonLink href="/verification">
-            Essayer sur la démonstration
+            {t("ctaTry")}
             <Icon name="arrow-right" size={18} />
           </ButtonLink>
           <ButtonLink href="/faq" variant="outline">
-            Questions fréquentes
+            {t("ctaFaq")}
           </ButtonLink>
         </div>
       </Container>

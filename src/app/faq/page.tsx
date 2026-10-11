@@ -1,27 +1,43 @@
 import type { Metadata } from "next";
+import { getLocale, getTranslations } from "next-intl/server";
 import { FaqAccordion } from "@/components/marketing/faq-accordion";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { faqEntries } from "@/content/faq";
+import { faqEntryKeys, type FaqEntry } from "@/content/faq";
+import { isLocale } from "@/i18n/locales";
 import { breadcrumbJsonLd, buildMetadata, faqJsonLd } from "@/lib/seo";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Questions fréquentes",
-  description:
-    "Ce que Card Verify vérifie réellement, où vont vos saisies, pourquoi un numéro validé par Luhn peut être refusé par une banque, et comment réutiliser le code.",
-  path: "/faq",
-  keywords: ["FAQ", "Luhn", "sécurité", "vie privée"],
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const t = await getTranslations("faqPage");
 
-const jsonLd = [
-  breadcrumbJsonLd([
-    { name: "Accueil", path: "/" },
-    { name: "FAQ", path: "/faq" },
-  ]),
-  faqJsonLd(faqEntries),
-];
+  return buildMetadata({
+    title: t("meta.title"),
+    description: t("meta.description"),
+    path: "/faq",
+    keywords: ["FAQ", "Luhn", "sécurité", "vie privée"],
+    locale: isLocale(locale) ? locale : undefined,
+  });
+}
 
-export default function FaqPage() {
+export default async function FaqPage() {
+  const t = await getTranslations("faqPage");
+  const tCommon = await getTranslations("common");
+  const tNav = await getTranslations("nav");
+
+  const entries: FaqEntry[] = faqEntryKeys.map((key) => ({
+    question: t(`entries.${key}.question`),
+    answer: t(`entries.${key}.answer`),
+  }));
+
+  const jsonLd = [
+    breadcrumbJsonLd([
+      { name: tCommon("home"), path: "/" },
+      { name: tNav("items.faq.label"), path: "/faq" },
+    ]),
+    faqJsonLd(entries),
+  ];
+
   return (
     <>
       <script
@@ -32,35 +48,33 @@ export default function FaqPage() {
       <Container size="md" className="py-14 sm:py-20">
         <header className="max-w-2xl">
           <p className="text-sm font-semibold uppercase tracking-widest text-accent">
-            Aide
+            {t("eyebrow")}
           </p>
           <h1 className="mt-3 text-balance text-4xl font-bold tracking-tight text-ink-1 sm:text-5xl">
-            Questions fréquentes
+            {t("title")}
           </h1>
           <p className="mt-4 text-pretty text-lg leading-relaxed text-ink-3">
-            Les réponses aux confusions les plus courantes autour de la
-            validation d&apos;un numéro de carte.
+            {t("description")}
           </p>
         </header>
 
         <div className="mt-12">
-          <FaqAccordion entries={faqEntries} />
+          <FaqAccordion entries={entries} />
         </div>
 
         <div className="mt-14 rounded-2xl border border-line bg-card p-8 text-center">
           <h2 className="text-xl font-semibold text-ink-1">
-            Une question sans réponse ?
+            {t("ctaTitle")}
           </h2>
           <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-ink-3">
-            Le projet est pédagogique et ouvert aux suggestions. Écrivez-nous, ou
-            lisez d&apos;abord l&apos;explication complète de l&apos;algorithme.
+            {t("ctaDescription")}
           </p>
           <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
             <ButtonLink href="/contact" size="sm">
-              Nous écrire
+              {t("ctaContact")}
             </ButtonLink>
             <ButtonLink href="/algorithme" variant="outline" size="sm">
-              Lire la documentation
+              {t("ctaDocs")}
             </ButtonLink>
           </div>
         </div>

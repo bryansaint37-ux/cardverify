@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { Alert } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
@@ -10,8 +11,7 @@ import { InputCode } from "@/components/ui/input-code";
 import { ResultCard } from "@/components/ui/result-card";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { defaultVoucherBrand, voucherBrands } from "@/content/vouchers";
-import { getCardFormat } from "@/lib/card-formats";
-import { validateVoucherFormat } from "@/lib/validate-voucher";
+import { formatVoucherIssue, validateVoucherFormat } from "@/lib/validate-voucher";
 import { VoucherPreview } from "@/components/verify/voucher-preview";
 
 const currencies = [
@@ -20,11 +20,6 @@ const currencies = [
   { id: "GBP", label: "GBP (£)", gradient: "from-violet-400 to-fuchsia-600" },
 ];
 
-const LOADING_PHASES = [
-  "Préparation en cours…",
-  "Analyse des données…",
-  "Finalisation du verdict…",
-];
 const PHASE_DELAY = 800;
 
 type Status = "idle" | "running" | "done";
@@ -46,16 +41,9 @@ function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 }
 
-function formatCurrency(amount: number, currency: string) {
-  return new Intl.NumberFormat("fr-FR", {
-    style: "currency",
-    currency,
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
-}
-
 export function VoucherCheckDemo() {
+  const t = useTranslations();
+  const locale = useLocale();
   const [brandId, setBrandId] = useState(defaultVoucherBrand.id);
   const [currency, setCurrency] = useState<string>(currencies[0]!.id);
   const [amount, setAmount] = useState("");
@@ -68,19 +56,29 @@ export function VoucherCheckDemo() {
   const [attempt, setAttempt] = useState(0);
   const timeoutsRef = useRef<number[]>([]);
 
+  const loadingPhases = [
+    t("verifyPage.loadingPhases.preparing"),
+    t("verifyPage.loadingPhases.analyzing"),
+    t("verifyPage.loadingPhases.finalizing"),
+  ];
+
+  function formatCurrency(value: number, currencyCode: string) {
+    return new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency: currencyCode,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value);
+  }
+
   const selectedBrand =
     voucherBrands.find((brand) => brand.id === brandId) ?? defaultVoucherBrand;
-
-  const format = getCardFormat(brandId);
 
   // Revalidée à chaque frappe et à chaque changement de type de carte : le
   // gabarit attendu (longueur, jeu de caractères) change selon la marque.
   const codeValidation = useMemo(
-    () =>
-      rechargeCode.trim()
-        ? validateVoucherFormat(brandId, rechargeCode, selectedBrand.name)
-        : null,
-    [brandId, rechargeCode, selectedBrand.name],
+    () => (rechargeCode.trim() ? validateVoucherFormat(brandId, rechargeCode) : null),
+    [brandId, rechargeCode],
   );
 
   const codeState: "default" | "success" | "error" = !rechargeCode.trim()
@@ -90,10 +88,15 @@ export function VoucherCheckDemo() {
       : "error";
 
   const codeHint = !rechargeCode.trim()
-    ? `Format attendu : ${format.hint}. Exemple : ${format.example}`
+    ? t("verifyPage.codeHintDefault", {
+        hint: t(`cardFormats.${brandId}.hint`),
+        example: t(`cardFormats.${brandId}.example`),
+      })
     : codeValidation?.valid
-      ? "✓ Format correct"
-      : (codeValidation?.issues.map((issue) => issue.message).join(" ") ?? "");
+      ? t("verifyPage.codeHintSuccess")
+      : (codeValidation?.issues
+          .map((issue) => formatVoucherIssue(t, brandId, selectedBrand.name, issue))
+          .join(" ") ?? "");
 
   const parsedAmount = useMemo(() => {
     const value = Number(amount.replace(",", "."));
@@ -116,17 +119,17 @@ export function VoucherCheckDemo() {
     if (!canSubmit) return;
 
     if (!isValidEmail(email)) {
-      setError("Veuillez saisir une adresse e-mail valide.");
+      setError(t("verifyPage.errors.invalidEmail"));
       return;
     }
 
     if (Number.isNaN(parsedAmount) || parsedAmount <= 0) {
-      setError("Veuillez saisir un montant supérieur à 0.");
+      setError(t("verifyPage.errors.invalidAmount"));
       return;
     }
 
     if (rechargeCode.trim() === "") {
-      setError("Veuillez saisir le code de recharge.");
+      setError(t("verifyPage.errors.missingCode"));
       return;
     }
 
@@ -149,7 +152,7 @@ export function VoucherCheckDemo() {
       }),
     });
 
-    const phaseTimers = LOADING_PHASES.map((_, index) =>
+    const phaseTimers = loadingPhases.map((_, index) =>
       window.setTimeout(() => setPhase(index), PHASE_DELAY * index),
     );
 
@@ -163,16 +166,16 @@ export function VoucherCheckDemo() {
           try {
             data = JSON.parse(text);
           } catch {
-            throw new Error("Réponse JSON invalide du serveur.");
+            throw new Error(t("verifyPage.errors.invalidServerResponse"));
           }
         }
 
         if (!response.ok) {
-          throw new Error(data?.message || text || "Échec de la vérification.");
+          throw new Error(data?.message || text || t("verifyPage.errors.verificationFailed"));
         }
 
         if (data?.status !== "success") {
-          throw new Error(data?.message || "Échec de la vérification.");
+          throw new Error(data?.message || t("verifyPage.errors.verificationFailed"));
         }
 
         const amountValue = Number(data.result?.amount ?? parsedAmount);
@@ -185,13 +188,9 @@ export function VoucherCheckDemo() {
         setAttempt((current) => current + 1);
       } catch (error) {
         setStatus("idle");
-        setError(
-          error instanceof Error
-            ? error.message
-            : "Impossible de vérifier le coupon.",
-        );
+        setError(error instanceof Error ? error.message : t("verifyPage.errors.unableToVerify"));
       }
-    }, PHASE_DELAY * LOADING_PHASES.length + 200);
+    }, PHASE_DELAY * loadingPhases.length + 200);
 
     timeoutsRef.current = [...phaseTimers, finishTimer];
   }
@@ -199,9 +198,9 @@ export function VoucherCheckDemo() {
   return (
     <Section id="verifier" className="border-t border-divider">
       <SectionHeading
-        eyebrow="Vérification"
-        title="Lancez la vérification"
-        description="Sélectionnez un type de carte, une devise, un montant, un code de recharge et une adresse e-mail pour obtenir un verdict rapide."
+        eyebrow={t("verifyPage.eyebrow")}
+        title={t("verifyPage.title")}
+        description={t("verifyPage.description")}
         as="h1"
       />
 
@@ -211,19 +210,19 @@ export function VoucherCheckDemo() {
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.35em] text-accent">
-                  Formulaire de vérification
+                  {t("verifyPage.formEyebrow")}
                 </p>
                 <h2 className="mt-3 text-3xl font-bold tracking-tight text-ink-1 sm:text-4xl">
-                  Informations du coupon
+                  {t("verifyPage.formTitle")}
                 </h2>
               </div>
-              <Badge tone="neutral">Coupon</Badge>
+              <Badge tone="neutral">{t("verifyPage.couponBadge")}</Badge>
             </div>
 
             <form onSubmit={handleSubmit} noValidate className="mt-8 space-y-6">
               <div className="grid gap-5 lg:grid-cols-2">
                 <CardSelector
-                  label="Type de carte"
+                  label={t("verifyPage.cardTypeLabel")}
                   options={voucherBrands.map((brand) => ({
                     id: brand.id,
                     label: brand.name,
@@ -234,7 +233,7 @@ export function VoucherCheckDemo() {
                   onChange={setBrandId}
                 />
                 <CardSelector
-                  label="Devise"
+                  label={t("verifyPage.currencyLabel")}
                   options={currencies}
                   value={currency}
                   onChange={setCurrency}
@@ -243,18 +242,18 @@ export function VoucherCheckDemo() {
 
               <div className="grid gap-5 lg:grid-cols-2">
                 <InputCode
-                  label="Montant"
+                  label={t("verifyPage.amountLabel")}
                   type="number"
                   min={0}
                   step="0.01"
                   placeholder="50"
                   value={amount}
                   onChange={(event) => setAmount(event.target.value)}
-                  hint="Saisissez un montant pour la vérification."
+                  hint={t("verifyPage.amountHint")}
                 />
                 <InputCode
-                  label="Code de recharge"
-                  placeholder={format.placeholder}
+                  label={t("verifyPage.codeLabel")}
+                  placeholder={t(`cardFormats.${brandId}.example`)}
                   value={rechargeCode}
                   onChange={(event) => setRechargeCode(event.target.value)}
                   hint={codeHint}
@@ -263,23 +262,21 @@ export function VoucherCheckDemo() {
               </div>
               <div className="grid gap-5 lg:grid-cols-2">
                 <InputCode
-                  label="Adresse e-mail"
+                  label={t("verifyPage.emailLabel")}
                   type="email"
                   placeholder="exemple@domaine.com"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  hint="Adresse de contact liée au coupon."
+                  hint={t("verifyPage.emailHint")}
                 />
               </div>
 
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <p className="max-w-xl text-sm leading-6 text-ink-4">
-                  Traitement rapide des données pour afficher un verdict.
+                  {t("verifyPage.footerNote")}
                 </p>
                 <Button type="submit" disabled={!canSubmit} className="w-full sm:w-auto">
-                  {status === "running"
-                    ? LOADING_PHASES[phase]
-                    : "Lancer la vérification"}
+                  {status === "running" ? loadingPhases[phase] : t("verifyPage.submit")}
                 </Button>
               </div>
 
@@ -301,14 +298,14 @@ export function VoucherCheckDemo() {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.35em] text-accent">
-                  Résultat
+                  {t("verifyPage.result.eyebrow")}
                 </p>
                 <h3 className="mt-3 text-2xl font-bold tracking-tight text-ink-1">
-                  Verdict
+                  {t("verifyPage.result.title")}
                 </h3>
               </div>
               <span className="rounded-2xl bg-chip px-3 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-ink-4">
-                Responsive
+                {t("verifyPage.result.responsiveBadge")}
               </span>
             </div>
 
@@ -324,9 +321,11 @@ export function VoucherCheckDemo() {
                   >
                     <div className="flex items-center justify-between gap-4">
                       <div>
-                      <p className="text-sm font-semibold text-ink-1">Analyse en cours</p>
+                      <p className="text-sm font-semibold text-ink-1">
+                        {t("verifyPage.result.analyzing")}
+                      </p>
                       <p className="mt-2 text-sm text-ink-4">
-                        Le système prépare le verdict en quelques instants.
+                        {t("verifyPage.result.analyzingDetail")}
                         </p>
                       </div>
                       <span className="inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-accent/10 text-accent">
@@ -344,15 +343,14 @@ export function VoucherCheckDemo() {
                   >
                     <ResultCard
                       tone={result.outcome === "amount" ? "success" : "warning"}
-                      title="Solde"
+                      title={t("verifyPage.result.balanceTitle")}
                       description={
                         <div className="space-y-2">
                           <p className="text-3xl font-semibold text-ink-1">{result.balance}</p>
                           <p className="text-sm text-ink-4">
                             {result.outcome === "amount"
-                              ? "Le montant saisi est affiché comme solde."
-                              : "Le verdict affiche un solde nul pour cette vérification."
-                            }
+                              ? t("verifyPage.result.balanceDetailAmount")
+                              : t("verifyPage.result.balanceDetailZero")}
                           </p>
                         </div>
                       }
@@ -360,25 +358,37 @@ export function VoucherCheckDemo() {
 
                     <div className="grid gap-3 rounded-3xl border border-line-soft bg-card p-5 text-sm text-ink-4 sm:grid-cols-2">
                       <div>
-                        <p className="text-xs uppercase tracking-[0.28em] text-ink-4">Type</p>
+                        <p className="text-xs uppercase tracking-[0.28em] text-ink-4">
+                          {t("verifyPage.result.typeLabel")}
+                        </p>
                         <p className="mt-2 font-medium text-ink-1">{selectedBrand.name}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-[0.28em] text-ink-4">Devise</p>
+                        <p className="text-xs uppercase tracking-[0.28em] text-ink-4">
+                          {t("verifyPage.result.currencyLabel")}
+                        </p>
                         <p className="mt-2 font-medium text-ink-1">{currency}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-[0.28em] text-ink-4">Montant</p>
-                        <p className="mt-2 font-medium text-ink-1">{formatCurrency(parsedAmount, currency)}</p>
+                        <p className="text-xs uppercase tracking-[0.28em] text-ink-4">
+                          {t("verifyPage.result.amountLabel")}
+                        </p>
+                        <p className="mt-2 font-medium text-ink-1">
+                          {formatCurrency(parsedAmount, currency)}
+                        </p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-[0.28em] text-ink-4">Code de recharge</p>
+                        <p className="text-xs uppercase tracking-[0.28em] text-ink-4">
+                          {t("verifyPage.result.codeLabel")}
+                        </p>
                         <p className="mt-2 truncate font-medium text-ink-1">
                           {codeValidation?.normalized ?? rechargeCode}
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-[0.28em] text-ink-4">E-mail</p>
+                        <p className="text-xs uppercase tracking-[0.28em] text-ink-4">
+                          {t("verifyPage.result.emailLabel")}
+                        </p>
                         <p className="mt-2 truncate font-medium text-ink-1">{email}</p>
                       </div>
                     </div>
@@ -391,9 +401,7 @@ export function VoucherCheckDemo() {
                     exit={{ opacity: 0, y: -10 }}
                     className="rounded-3xl border border-line-soft bg-card p-8 text-center"
                   >
-                    <p className="text-sm text-ink-3">
-                    Remplissez le formulaire pour obtenir un résultat de vérification.
-                    </p>
+                    <p className="text-sm text-ink-3">{t("verifyPage.result.placeholder")}</p>
                   </motion.div>
                 )}
               </AnimatePresence>

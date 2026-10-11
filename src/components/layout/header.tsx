@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { Logo } from "@/components/layout/logo";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
@@ -13,6 +15,7 @@ import { cn } from "@/lib/utils";
 
 export function Header() {
   const pathname = usePathname();
+  const t = useTranslations("nav");
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-header backdrop-blur-xl">
@@ -22,7 +25,7 @@ export function Header() {
 
           <nav
             className="hidden items-center gap-1 lg:flex"
-            aria-label="Navigation principale"
+            aria-label={t("ariaMain")}
           >
             {mainNav.map((item) => {
               const active =
@@ -40,7 +43,7 @@ export function Header() {
                     active ? "text-accent" : "text-ink-3 hover:text-ink-1",
                   )}
                 >
-                  {item.label}
+                  {t(`items.${item.key}.label`)}
                   {active ? (
                     <motion.span
                       layoutId="nav-active"
@@ -54,12 +57,13 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <LanguageSwitcher />
             <ButtonLink
               href="/verifier"
               size="sm"
               className="hidden sm:inline-flex"
             >
-              Tester la démo
+              {t("testDemo")}
             </ButtonLink>
             <ThemeToggle />
             <MobileNav />

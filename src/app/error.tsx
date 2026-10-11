@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 
@@ -11,6 +12,8 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const t = useTranslations("errorPage");
+
   useEffect(() => {
     // En production, brancher ici un service de suivi d'erreurs.
     console.error(error);
@@ -34,23 +37,22 @@ export default function Error({
       </span>
 
       <h1 className="mt-6 text-balance text-3xl font-bold tracking-tight text-ink-1 sm:text-4xl">
-        Une erreur est survenue
+        {t("title")}
       </h1>
       <p className="mx-auto mt-4 max-w-md text-pretty leading-relaxed text-ink-3">
-        Le rendu de cette page a échoué. Réessayer suffit le plus souvent ; si le
-        problème persiste, revenez à l&apos;accueil.
+        {t("description")}
       </p>
 
       {error.digest ? (
         <p className="mt-4 font-mono text-xs text-ink-4">
-          Référence : {error.digest}
+          {t("reference", { digest: error.digest })}
         </p>
       ) : null}
 
       <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
-        <Button onClick={reset}>Réessayer</Button>
+        <Button onClick={reset}>{t("retry")}</Button>
         <ButtonLink href="/" variant="outline">
-          Retour à l&apos;accueil
+          {t("ctaHome")}
         </ButtonLink>
       </div>
     </Container>

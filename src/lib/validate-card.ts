@@ -1,4 +1,4 @@
-import type { CardValidation, ValidationIssue } from "@/types";
+import type { CardBrand, CardValidation, ValidationIssue } from "@/types";
 import { detectBrand } from "@/lib/card-brands";
 import { formatCardNumber } from "@/lib/format";
 import { luhnCheck } from "@/lib/luhn";
@@ -14,6 +14,10 @@ import { onlyDigits } from "@/lib/utils";
  *   3. checksum — la somme de Luhn est-elle un multiple de 10.
  *
  * Aucun appel réseau, aucun stockage : tout se calcule localement.
+ *
+ * Retourne des codes d'erreur structurés plutôt que du texte : le texte est
+ * produit par `formatCardIssue`, à partir des traductions actives, côté
+ * client comme côté serveur.
  */
 export function validateCard(input: string): CardValidation {
   const digits = onlyDigits(input);
@@ -22,44 +26,26 @@ export function validateCard(input: string): CardValidation {
   const issues: ValidationIssue[] = [];
 
   if (digits.length === 0) {
-    issues.push({ code: "empty", message: "Saisissez un numéro à vérifier." });
+    issues.push({ code: "empty" });
   } else {
     if (input.replace(/[\s-]/g, "").length !== digits.length) {
-      issues.push({
-        code: "non-digit",
-        message: "Le numéro contient des caractères non numériques.",
-      });
+      issues.push({ code: "non-digit" });
     }
 
     if (digits.length < 12) {
-      issues.push({
-        code: "too-short",
-        message: `Numéro trop court : ${digits.length} chiffre(s) sur 12 minimum.`,
-      });
+      issues.push({ code: "too-short", count: digits.length });
     } else if (digits.length > 19) {
-      issues.push({
-        code: "too-long",
-        message: `Numéro trop long : ${digits.length} chiffres, 19 au maximum.`,
-      });
+      issues.push({ code: "too-long", count: digits.length });
     }
 
     if (brand.id === "unknown") {
-      issues.push({
-        code: "unknown-brand",
-        message: "Aucun réseau connu ne correspond à ce préfixe IIN.",
-      });
+      issues.push({ code: "unknown-brand" });
     } else if (!brand.lengths.includes(digits.length)) {
-      issues.push({
-        code: "invalid-length",
-        message: `${brand.label} attend ${brand.lengths.join(" ou ")} chiffres, ${digits.length} fournis.`,
-      });
+      issues.push({ code: "invalid-length", count: digits.length });
     }
 
     if (!luhn.valid) {
-      issues.push({
-        code: "checksum",
-        message: "La somme de contrôle de Luhn est incorrecte.",
-      });
+      issues.push({ code: "checksum" });
     }
   }
 
@@ -71,4 +57,35 @@ export function validateCard(input: string): CardValidation {
     valid: issues.length === 0,
     issues,
   };
+}
+
+/** Traducteur générique, compatible `useTranslations()` (client) et `getTranslations()` (serveur) sans espace de noms. */
+type Translator = (key: string, values?: Record<string, string | number>) => string;
+
+/** Construit le message lisible d'une erreur de validation, dans la langue active. */
+export function formatCardIssue(
+  t: Translator,
+  brand: CardBrand,
+  issue: ValidationIssue,
+): string {
+  switch (issue.code) {
+    case "empty":
+      return t("cardValidation.empty");
+    case "non-digit":
+      return t("cardValidation.nonDigit");
+    case "too-short":
+      return t("cardValidation.tooShort", { count: issue.count });
+    case "too-long":
+      return t("cardValidation.tooLong", { count: issue.count });
+    case "unknown-brand":
+      return t("cardValidation.unknownBrand");
+    case "invalid-length":
+      return t("cardValidation.invalidLength", {
+        brand: t(`cardBrands.${brand.id}`),
+        lengths: brand.lengths.join(t("cardValidation.lengthsSeparator")),
+        count: issue.count,
+      });
+    case "checksum":
+      return t("cardValidation.checksum");
+  }
 }

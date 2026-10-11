@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 type LoadingSize = "sm" | "md" | "lg";
@@ -26,6 +29,8 @@ export function Loading({
   label?: string;
   className?: string;
 }) {
+  const t = useTranslations("common");
+
   return (
     <span role="status" className={cn("inline-flex items-center gap-2", className)}>
       <span
@@ -35,7 +40,7 @@ export function Loading({
       {label ? (
         <span>{label}</span>
       ) : (
-        <span className="sr-only">Chargement en cours</span>
+        <span className="sr-only">{t("loading")}</span>
       )}
     </span>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import type { CardBrand } from "@/types";
 import { cn } from "@/lib/utils";
 
@@ -17,6 +18,7 @@ export function CardPreview({
   brand: CardBrand;
   valid: boolean;
 }) {
+  const t = useTranslations();
   const placeholder = brand.gaps.map((size) => "•".repeat(size)).join(" ");
 
   return (
@@ -39,7 +41,7 @@ export function CardPreview({
           {/* Puce stylisée */}
           <div className="h-8 w-11 rounded-md bg-gradient-to-br from-yellow-200/90 to-yellow-500/90" />
           <span className="text-sm font-semibold tracking-wide text-white/90">
-            {brand.id === "unknown" ? "" : brand.label}
+            {brand.id === "unknown" ? "" : t(`cardBrands.${brand.id}`)}
           </span>
         </div>
 
@@ -51,10 +53,10 @@ export function CardPreview({
           <div className="mt-4 flex items-end justify-between">
             <div>
               <p className="text-[10px] uppercase tracking-widest text-white/60">
-                Démonstration
+                {t("demoPage.cardPreview.demoLabel")}
               </p>
               <p className="text-sm font-medium tracking-wide text-white/90">
-                NUMÉRO DE TEST
+                {t("demoPage.cardPreview.testNumber")}
               </p>
             </div>
 
@@ -66,7 +68,9 @@ export function CardPreview({
                   : "bg-black/25 text-white/70",
               )}
             >
-              {valid ? "Structure valide" : "En attente"}
+              {valid
+                ? t("demoPage.cardPreview.validStructure")
+                : t("demoPage.cardPreview.pending")}
             </span>
           </div>
         </div>

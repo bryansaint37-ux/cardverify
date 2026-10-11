@@ -2,17 +2,19 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useTheme } from "@/components/theme/theme-provider";
 
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === "dark";
+  const t = useTranslations("themeToggle");
 
   return (
     <button
       type="button"
       onClick={toggleTheme}
-      aria-label={isDark ? "Passer au thème clair" : "Passer au thème sombre"}
+      aria-label={isDark ? t("switchToLight") : t("switchToDark")}
       aria-pressed={isDark}
       className="relative grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-full border transition-colors"
       style={{ borderColor: "var(--line-soft)", color: "var(--ink-2)" }}
